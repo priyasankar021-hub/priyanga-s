@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Priyanga Sivasankaran — Data & Business Intelligence Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;1,9..144,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0b0e14;
+    --bg2: #111620;
+    --bg3: #171d2b;
+    --surface: #1b2233;
+    --border: rgba(100,140,220,0.12);
+    --border2: rgba(100,140,220,0.22);
+    --teal: #2dd4bf;
+    --teal2: #0f9a8a;
+    --amber: #f59e0b;
+    --muted: #64748b;
+    --text: #e2e8f4;
+    --text2: #94a3b8;
+    --text3: #4a5568;
+    --accent: #6ea8fe;
+    --green: #34d399;
+    --red: #f87171;
+    --mono: 'DM Mono', monospace;
+    --serif: 'Fraunces', serif;
+    --sans: 'DM Sans', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── GRID NOISE TEXTURE ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(100,168,254,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(100,168,254,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 3rem;
+    background: rgba(11,14,20,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--teal);
+    letter-spacing: 0.04em;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text2);
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--teal); }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8rem 3rem 4rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .hero-tag {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--teal);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .hero-tag::before {
+    content: '';
+    display: inline-block;
+    width: 24px;
+    height: 1px;
+    background: var(--teal);
+  }
+
+  .hero h1 {
+    font-family: var(--serif);
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--text);
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.02em;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--teal);
+  }
+
+  .hero-sub {
+    font-size: 16px;
+    color: var(--text2);
+    max-width: 560px;
+    margin-bottom: 2.5rem;
+    line-height: 1.8;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 3rem;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+  }
+
+  .stat { display: flex; flex-direction: column; }
+
+  .stat-val {
+    font-family: var(--mono);
+    font-size: 2rem;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  .stat-val span { color: var(--teal); }
+
+  .stat-label {
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 0.25rem;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1.4rem;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+
+  .btn-primary {
+    background: var(--teal2);
+    color: #fff;
+    border: 1px solid var(--teal);
+  }
+
+  .btn-primary:hover { background: var(--teal); color: #0b0e14; }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--text2);
+    border: 1px solid var(--border2);
+  }
+
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ── SECTION COMMON ── */
+  section {
+    position: relative;
+    z-index: 1;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 5rem 3rem;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 3rem;
+  }
+
+  .section-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--teal);
+    letter-spacing: 0.1em;
+  }
+
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 300;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+
+  .section-divider {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+    margin-left: 1rem;
+  }
+
+  /* ── PROJECTS ── */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .project-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    transition: border-color 0.2s, transform 0.2s;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .project-card:hover {
+    border-color: var(--border2);
+    transform: translateY(-2px);
+  }
+
+  .project-card:hover .project-arrow { opacity: 1; transform: translate(2px, -2px); }
+
+  .project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+  }
+
+  .project-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .icon-teal { background: rgba(45,212,191,0.1); }
+  .icon-amber { background: rgba(245,158,11,0.1); }
+  .icon-blue { background: rgba(110,168,254,0.1); }
+  .icon-green { background: rgba(52,211,153,0.1); }
+
+  .project-arrow {
+    color: var(--muted);
+    font-size: 16px;
+    opacity: 0;
+    transition: all 0.2s;
+  }
+
+  .project-title {
+    font-family: var(--sans);
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+
+  .project-desc {
+    font-size: 13px;
+    color: var(--text2);
+    line-height: 1.7;
+    flex: 1;
+    margin-bottom: 1.25rem;
+  }
+
+  .project-impact {
+    background: rgba(45,212,191,0.06);
+    border: 1px solid rgba(45,212,191,0.12);
+    border-radius: 4px;
+    padding: 0.6rem 0.85rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .project-impact-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 0.15rem;
+  }
+
+  .project-impact-val {
+    font-size: 13px;
+    color: var(--text2);
+  }
+
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .tag {
+    font-family: var(--mono);
+    font-size: 10px;
+    padding: 3px 9px;
+    border-radius: 3px;
+    letter-spacing: 0.04em;
+    background: rgba(100,168,254,0.08);
+    color: var(--accent);
+    border: 1px solid rgba(100,168,254,0.12);
+  }
+
+  /* ── SKILLS ── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+  }
+
+  .skill-group {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.5rem;
+  }
+
+  .skill-group-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .skill-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .skill-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .skill-name {
+    font-size: 13px;
+    color: var(--text2);
+  }
+
+  .skill-bar-wrap {
+    width: 80px;
+    height: 3px;
+    background: rgba(100,140,220,0.1);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .skill-bar {
+    height: 100%;
+    border-radius: 2px;
+    background: var(--teal);
+  }
+
+  /* ── ABOUT ── */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .about-text p {
+    color: var(--text2);
+    margin-bottom: 1rem;
+    line-height: 1.85;
+  }
+
+  .about-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 1.5rem;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 5px 12px;
+    border-radius: 3px;
+    background: var(--bg2);
+    border: 1px solid var(--border2);
+    color: var(--text2);
+  }
+
+  .badge-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--teal);
+    flex-shrink: 0;
+  }
+
+  .about-terminal {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .terminal-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0.65rem 1rem;
+    background: var(--bg3);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot-r { background: #ff5f57; }
+  .dot-y { background: #febc2e; }
+  .dot-g { background: #2ac251; }
+
+  .terminal-body {
+    padding: 1.5rem;
+    font-family: var(--mono);
+    font-size: 12px;
+    line-height: 1.9;
+    color: var(--text2);
+  }
+
+  .t-key { color: var(--accent); }
+  .t-val { color: var(--green); }
+  .t-str { color: var(--amber); }
+  .t-comment { color: var(--text3); }
+  .t-teal { color: var(--teal); }
+
+  /* ── CONTACT ── */
+  .contact-row {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--text2);
+    text-decoration: none;
+    padding: 0.75rem 1.25rem;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: var(--surface);
+    transition: all 0.2s;
+  }
+
+  .contact-item:hover { border-color: var(--teal); color: var(--teal); }
+
+  /* ── FOOTER ── */
+  footer {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 3rem;
+    border-top: 1px solid var(--border);
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text3);
+    letter-spacing: 0.06em;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-up { animation: fadeUp 0.6s ease both; }
+  .delay-1 { animation-delay: 0.1s; }
+  .delay-2 { animation-delay: 0.2s; }
+  .delay-3 { animation-delay: 0.35s; }
+  .delay-4 { animation-delay: 0.5s; }
+  .delay-5 { animation-delay: 0.65s; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 4rem 1.5rem; }
+    .hero { padding: 7rem 1.5rem 3rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .hero-stats { gap: 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-logo">priyanga.s — portfolio</span>
+  <ul class="nav-links">
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag fade-up">Business Intelligence & Data Strategy</div>
+  <h1 class="fade-up delay-1">Turning data into<br /><em>decisions</em> that matter.</h1>
+  <p class="hero-sub fade-up delay-2">
+    6+ years building BI dashboards, financial models, and revenue intelligence systems for
+    global organisations across IT, Energy, and Automotive. Based in Yokohama, Japan.
+  </p>
+  <div class="hero-stats fade-up delay-3">
+    <div class="stat">
+      <span class="stat-val">460<span>+</span></span>
+      <span class="stat-label">Man-hours saved / yr</span>
+    </div>
+    <div class="stat">
+      <span class="stat-val">85<span>%</span></span>
+      <span class="stat-label">Forecast accuracy</span>
+    </div>
+    <div class="stat">
+      <span class="stat-val">$100<span>M+</span></span>
+      <span class="stat-label">Business unit enabled</span>
+    </div>
+    <div class="stat">
+      <span class="stat-val">6<span>+</span></span>
+      <span class="stat-label">Years experience</span>
+    </div>
+  </div>
+  <div class="hero-cta fade-up delay-4">
+    <a href="#projects" class="btn btn-primary">↓ View Projects</a>
+    <a href="mailto:priyasankar021@gmail.com" class="btn btn-outline">Get in Touch</a>
+    <a href="https://linkedin.com/in/priyanga-s" target="_blank" class="btn btn-outline">LinkedIn →</a>
+  </div>
+</div>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <h2 class="section-title">Featured Projects</h2>
+    <div class="section-divider"></div>
+  </div>
+
+  <div class="projects-grid">
+
+    <!-- Project 1 -->
+    <a class="project-card" href="#" title="Add your GitHub repo link here">
+      <div class="project-header">
+        <div class="project-icon icon-teal">📊</div>
+        <span class="project-arrow">↗</span>
+      </div>
+      <h3 class="project-title">Financial Reporting Automation</h3>
+      <p class="project-desc">
+        Automated end-to-end financial reporting and daily/monthly variance analysis workflows,
+        replacing a 2-hour manual Excel process with a fully automated pipeline.
+      </p>
+      <div class="project-impact">
+        <div class="project-impact-label">Impact</div>
+        <div class="project-impact-val">460+ man-hours saved annually · 90% effort reduction</div>
+      </div>
+      <div class="project-tags">
+        <span class="tag">Power BI</span>
+        <span class="tag">Excel VBA</span>
+        <span class="tag">Power Query</span>
+        <span class="tag">FP&A</span>
+      </div>
+    </a>
+
+    <!-- Project 2 -->
+    <a class="project-card" href="#" title="Add your GitHub repo link here">
+      <div class="project-header">
+        <div class="project-icon icon-amber">📈</div>
+        <span class="project-arrow">↗</span>
+      </div>
+      <h3 class="project-title">Sales Pipeline Forecast Dashboard</h3>
+      <p class="project-desc">
+        Built custom pipeline dashboards and a data-driven forecasting model for a $100M business
+        unit, improving forecast accuracy from 70% to 85% through rigorous tracking.
+      </p>
+      <div class="project-impact">
+        <div class="project-impact-label">Impact</div>
+        <div class="project-impact-val">Forecast accuracy: 70% → 85% · $100M BU enabled</div>
+      </div>
+      <div class="project-tags">
+        <span class="tag">Tableau</span>
+        <span class="tag">Salesforce CRM</span>
+        <span class="tag">Excel</span>
+        <span class="tag">Sales Ops</span>
+      </div>
+    </a>
+
+    <!-- Project 3 -->
+    <a class="project-card" href="#" title="Add your GitHub repo link here">
+      <div class="project-header">
+        <div class="project-icon icon-blue">🔍</div>
+        <span class="project-arrow">↗</span>
+      </div>
+      <h3 class="project-title">CRM Revenue Leakage Detection</h3>
+      <p class="project-desc">
+        Designed and deployed a CRM-based process to identify and plug revenue leakage,
+        strengthening FP&A accuracy and reducing financial risk across the business unit.
+      </p>
+      <div class="project-impact">
+        <div class="project-impact-label">Impact</div>
+        <div class="project-impact-val">Improved revenue realisation · FP&A accuracy strengthened</div>
+      </div>
+      <div class="project-tags">
+        <span class="tag">CRM</span>
+        <span class="tag">SAP</span>
+        <span class="tag">Oracle</span>
+        <span class="tag">Revenue Ops</span>
+      </div>
+    </a>
+
+    <!-- Project 4 -->
+    <a class="project-card" href="#" title="Add your GitHub repo link here">
+      <div class="project-header">
+        <div class="project-icon icon-green">🧩</div>
+        <span class="project-arrow">↗</span>
+      </div>
+      <h3 class="project-title">Executive BI Dashboard (Tableau POC)</h3>
+      <p class="project-desc">
+        Owned end-to-end delivery of a Tableau dashboard POC, translating stakeholder business
+        requirements into interactive executive visualisations for strategic decision-making.
+      </p>
+      <div class="project-impact">
+        <div class="project-impact-label">Impact</div>
+        <div class="project-impact-val">Accelerated C-suite decision-making · Real-time KPI visibility</div>
+      </div>
+      <div class="project-tags">
+        <span class="tag">Tableau</span>
+        <span class="tag">Power BI</span>
+        <span class="tag">IBM Cognos</span>
+        <span class="tag">KPI Design</span>
+      </div>
+    </a>
+
+    <!-- Project 5 -->
+    <a class="project-card" href="#" title="Add your GitHub repo link here">
+      <div class="project-header">
+        <div class="project-icon icon-teal">💹</div>
+        <span class="project-arrow">↗</span>
+      </div>
+      <h3 class="project-title">Resource Utilisation & Revenue Tracker</h3>
+      <p class="project-desc">
+        Built Power BI and Excel dashboards tracking revenue, resource utilisation, and
+        forecast accuracy across global teams, delivering real-time visibility to senior leadership.
+      </p>
+      <div class="project-impact">
+        <div class="project-impact-label">Impact</div>
+        <div class="project-impact-val">Global leadership visibility · Cross-functional alignment</div>
+      </div>
+      <div class="project-tags">
+        <span class="tag">Power BI</span>
+        <span class="tag">Excel</span>
+        <span class="tag">Power Query</span>
+        <span class="tag">Operations</span>
+      </div>
+    </a>
+
+    <!-- Project 6 — Placeholder -->
+    <a class="project-card" href="#" style="border-style: dashed; opacity: 0.45;" title="Coming soon">
+      <div class="project-header">
+        <div class="project-icon icon-blue">＋</div>
+      </div>
+      <h3 class="project-title">More projects coming soon</h3>
+      <p class="project-desc">
+        Additional case studies, notebooks, and dashboard screenshots will be added here.
+        Check back soon or connect on LinkedIn.
+      </p>
+      <div class="project-tags">
+        <span class="tag">In Progress</span>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" style="background: linear-gradient(180deg, transparent, rgba(17,22,32,0.5)); border-radius: 16px;">
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <h2 class="section-title">Technical Skills</h2>
+    <div class="section-divider"></div>
+  </div>
+
+  <div class="skills-grid">
+
+    <div class="skill-group">
+      <div class="skill-group-label">Business Intelligence</div>
+      <div class="skill-list">
+        <div class="skill-item">
+          <span class="skill-name">Power BI</span>
+          <div class="skill-bar-wrap"><div class="skill-bar" style="width:90%"></div></div>
+        </div>
+        <div class="skill-item">
+          <span class="skill-name">Tableau</span>
+          <div class="skill-bar-wrap"><div class="skill-bar" style="width:85%"></div></div>
+        </div>
+        <div class="skill-item">
+          <span class="skill-name">IBM Cognos BI</span>
+          <div class="skill-bar-wrap"><div class="skill-bar" style="width:75%"></div></div>
+        </div>
+        <div class="skill-item">
+          <span class="skill-name">Excel (Advanced)</span>
+          <div class="skill-bar-wrap"><div class="skill-bar" style="width:95%"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="skill-group">
+      <div class="skill-group-label">Data & Automation</div>
+      <div class="skill-list">
+        <div class="skill-item">
+          <span class="skill-name">Power Query</span>
+          <div class="skill-bar-wrap"><div class="skill-bar" style="width:88%"></div></div>
+        </div>
+        <div class="skill-item">
+          <span class="skill-name">Excel VBA</span>
+          <div class="skill-bar-wrap"><div class="skill-bar" style="width:80%"></div></div>
+        </div>
+        <div class="skill-item">
+          <span class="skill-name">CRM (Salesforce / SAP)</span>
+          <div class="skill-bar-wrap"><div class="skill-bar" style="width:85%"></div></div>
+        </div>
+        <div class="skill-item">
+          <span class="skill-name">Data Modelling</span>
+          <div class="skill-bar-wrap"><div class="skill-bar" style="width:80%"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="skill-group">
+      <div class="skill-group-label">Finance & Operations</div>
+      <div class="skill-list">
+        <div class="skill-item">
+          <span class="skill-name">Revenue Forecasting</span>
+          <div class="skill-bar-wrap"><div class="skill-bar" style="width:90%"></div></div>
+        </div>
+        <div class="skill-item">
+          <span class="skill-name">Variance Analysis</span>
+          <div class="skill-bar-wrap"><div class="skill-bar" style="width:88%"></div></div>
+        </div>
+        <div class="skill-item">
+          <span class="skill-name">P&L Visibility</span>
+          <div class="skill-bar-wrap"><div class="skill-bar" style="width:85%"></div></div>
+        </div>
+        <div class="skill-item">
+          <span class="skill-name">KPI Dashboard Design</span>
+          <div class="skill-bar-wrap"><div class="skill-bar" style="width:92%"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="skill-group">
+      <div class="skill-group-label">Certifications</div>
+      <div class="skill-list" style="gap: 0.75rem;">
+        <div class="badge" style="width: 100%; justify-content: flex-start; background: var(--bg3);">
+          <span class="badge-dot"></span> JLPT N4 — Japan Foundation
+        </div>
+        <div class="badge" style="width: 100%; justify-content: flex-start; background: var(--bg3);">
+          <span class="badge-dot" style="background: var(--amber);"></span> Lean Six Sigma Green Belt — KPMG
+        </div>
+        <div class="badge" style="width: 100%; justify-content: flex-start; background: var(--bg3);">
+          <span class="badge-dot" style="background: var(--accent);"></span> Power BI Certification — Udemy
+        </div>
+        <div class="badge" style="width: 100%; justify-content: flex-start; background: var(--bg3);">
+          <span class="badge-dot" style="background: var(--muted);"></span> Oil & Gas Domain 101 — IHDC
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <h2 class="section-title">About Me</h2>
+    <div class="section-divider"></div>
+  </div>
+
+  <div class="about-grid">
+    <div class="about-text">
+      <p>
+        I'm a business operations and data professional with 6+ years of experience
+        bridging data, finance, and strategy across global organisations in IT, Energy, and Automotive.
+      </p>
+      <p>
+        Currently based in Yokohama, Japan 🇯🇵 — where I'm actively pursuing JLPT N3 after passing N4.
+        I specialise in building BI dashboards that go beyond pretty charts: systems that actually
+        drive decisions and save time at scale.
+      </p>
+      <p>
+        My sweet spot is the intersection of analytical depth and business context — I can work with raw
+        data and present it to a C-suite audience in the same breath.
+      </p>
+      <div class="about-badges">
+        <span class="badge"><span class="badge-dot"></span> Yokohama, Japan</span>
+        <span class="badge"><span class="badge-dot" style="background:var(--amber)"></span> Open to opportunities</span>
+        <span class="badge"><span class="badge-dot" style="background:var(--accent)"></span> EN / JA / TA</span>
+      </div>
+    </div>
+
+    <div class="about-terminal">
+      <div class="terminal-bar">
+        <div class="dot dot-r"></div>
+        <div class="dot dot-y"></div>
+        <div class="dot dot-g"></div>
+      </div>
+      <div class="terminal-body">
+        <span class="t-comment">// priyanga.json</span><br/>
+        {<br/>
+        &nbsp;&nbsp;<span class="t-key">"name"</span>: <span class="t-str">"Priyanga Sivasankaran"</span>,<br/>
+        &nbsp;&nbsp;<span class="t-key">"location"</span>: <span class="t-str">"Yokohama, Japan"</span>,<br/>
+        &nbsp;&nbsp;<span class="t-key">"experience_yrs"</span>: <span class="t-val">6</span>,<br/>
+        &nbsp;&nbsp;<span class="t-key">"sectors"</span>: [<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="t-str">"IT Services"</span>, <span class="t-str">"Energy"</span>,<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="t-str">"Automotive"</span><br/>
+        &nbsp;&nbsp;],<br/>
+        &nbsp;&nbsp;<span class="t-key">"core_skills"</span>: [<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="t-str">"FP&A"</span>, <span class="t-str">"BI Dashboards"</span>,<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="t-str">"Sales Operations"</span><br/>
+        &nbsp;&nbsp;],<br/>
+        &nbsp;&nbsp;<span class="t-key">"languages"</span>: {<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="t-teal">"English"</span>: <span class="t-str">"Fluent"</span>,<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="t-teal">"Japanese"</span>: <span class="t-str">"N4 → N3"</span>,<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="t-teal">"Tamil"</span>: <span class="t-str">"Native"</span><br/>
+        &nbsp;&nbsp;},<br/>
+        &nbsp;&nbsp;<span class="t-key">"available"</span>: <span class="t-val">true</span><br/>
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-header">
+    <span class="section-num">04</span>
+    <h2 class="section-title">Get in Touch</h2>
+    <div class="section-divider"></div>
+  </div>
+  <p style="color: var(--text2); margin-bottom: 2rem; max-width: 480px;">
+    Open to data, BI, and operations roles — especially in Japan or globally remote.
+    Feel free to reach out on LinkedIn or by email.
+  </p>
+  <div class="contact-row">
+    <a href="mailto:priyasankar021@gmail.com" class="contact-item">
+      ✉ priyasankar021@gmail.com
+    </a>
+    <a href="https://linkedin.com/in/priyanga-s" target="_blank" class="contact-item">
+      ↗ linkedin.com/in/priyanga-s
+    </a>
+    <a href="tel:+817090756726" class="contact-item">
+      ☏ +81 70-9075-6726
+    </a>
+  </div>
+</section>
+
+<footer>
+  built with intention · priyanga sivasankaran · yokohama, japan
+</footer>
+
+</body>
+</html>
