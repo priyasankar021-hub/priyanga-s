@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Before vs After</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0b0e14; --surface: #1b2233; --border: rgba(100,140,220,0.12);
+    --text: #e2e8f4; --text2: #94a3b8;
+    --mono: 'DM Mono', monospace; --sans: 'DM Sans', sans-serif;
+  }
+  body { background: var(--bg); font-family: var(--mono); padding: 1.5rem; }
+
+  .ba-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+  .col-head {
+    text-align: center; font-size: 10px; letter-spacing: 0.12em;
+    text-transform: uppercase; font-weight: 500; margin-bottom: 14px;
+    padding-bottom: 8px; border-bottom: 1px solid;
+  }
+  .col-head.b { color: #f87171; border-color: rgba(248,113,113,0.2); }
+  .col-head.a { color: #34d399; border-color: rgba(52,211,153,0.2); }
+
+  .node {
+    display: flex; align-items: center; gap: 8px; padding: 8px 10px;
+    border-radius: 7px; border: 1px solid rgba(255,255,255,0.05);
+    background: rgba(255,255,255,0.02);
+    opacity: 0.2; transition: all 0.45s ease;
+  }
+  .node.lit { opacity: 1; }
+  .node.done { opacity: 0.45; }
+
+  .node-dot {
+    width: 28px; height: 28px; border-radius: 6px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 500; transition: all 0.4s;
+  }
+  .node-text { flex: 1; min-width: 0; }
+  .node-name { font-size: 11px; font-weight: 500; color: #e2e8f4; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .node-sub  { font-size: 10px; color: #64748b; margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .node-pill { font-size: 9px; padding: 2px 7px; border-radius: 10px; flex-shrink: 0; letter-spacing: 0.02em; }
+
+  .b .node-dot { background: rgba(248,113,113,0.08); color: #f87171; border: 1px solid rgba(248,113,113,0.12); }
+  .b .node.lit { border-color: rgba(248,113,113,0.3); background: rgba(248,113,113,0.05); }
+  .b .node.lit .node-dot { background: rgba(248,113,113,0.18); border-color: rgba(248,113,113,0.4); }
+  .b .node-pill { background: rgba(248,113,113,0.1); color: #f87171; border: 1px solid rgba(248,113,113,0.2); }
+
+  .a .node-dot { background: rgba(52,211,153,0.06); color: #34d399; border: 1px solid rgba(52,211,153,0.1); }
+  .a .node.lit { border-color: rgba(52,211,153,0.3); background: rgba(52,211,153,0.05); }
+  .a .node.lit .node-dot { background: rgba(52,211,153,0.18); border-color: rgba(52,211,153,0.4); }
+  .a .node-pill { background: rgba(52,211,153,0.08); color: #34d399; border: 1px solid rgba(52,211,153,0.15); }
+  .a .node-pill.auto { background: rgba(110,168,254,0.1); color: #6ea8fe; border-color: rgba(110,168,254,0.25); }
+
+  .arrow {
+    display: flex; justify-content: center; align-items: center;
+    height: 16px; opacity: 0.1; transition: opacity 0.4s;
+  }
+  .arrow.lit { opacity: 0.7; }
+  .b .arrow path { stroke: #f87171; }
+  .a .arrow path { stroke: #34d399; }
+
+  .timer-row { display: flex; gap: 12px; margin-top: 14px; }
+  .timer-chip { flex: 1; text-align: center; padding: 10px; border-radius: 8px; border: 1px solid; }
+  .timer-chip.b { border-color: rgba(248,113,113,0.2); background: rgba(248,113,113,0.04); }
+  .timer-chip.a { border-color: rgba(52,211,153,0.2); background: rgba(52,211,153,0.04); }
+  .timer-val { font-size: 18px; font-weight: 500; }
+  .timer-chip.b .timer-val { color: #f87171; }
+  .timer-chip.a .timer-val { color: #34d399; }
+  .timer-lbl { font-size: 9px; color: #64748b; margin-top: 3px; letter-spacing: 0.08em; text-transform: uppercase; }
+
+  .saving-chip {
+    text-align: center; margin-top: 10px; padding: 8px 12px;
+    border-radius: 8px; border: 1px solid rgba(110,168,254,0.2);
+    background: rgba(110,168,254,0.05); font-size: 11px; color: #6ea8fe;
+    letter-spacing: 0.04em; opacity: 0; transition: opacity 0.6s;
+  }
+  .saving-chip.show { opacity: 1; }
+</style>
+</head>
+<body>
+
+<div class="ba-cols">
+
+  <div class="b">
+    <div class="col-head b">Before — manual</div>
+    <div class="node" id="b0"><div class="node-dot">CRM</div><div class="node-text"><div class="node-name">Export CRM data</div><div class="node-sub">Manual login &amp; download</div></div><div class="node-pill">10 min</div></div>
+    <div class="arrow" id="ba0"><svg width="12" height="14"><path d="M6 0 L6 10 M3 7 L6 11 L9 7" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div class="node" id="b1"><div class="node-dot">XLS</div><div class="node-text"><div class="node-name">Clean the export</div><div class="node-sub">Fix columns, dates, dupes</div></div><div class="node-pill">20 min</div></div>
+    <div class="arrow" id="ba1"><svg width="12" height="14"><path d="M6 0 L6 10 M3 7 L6 11 L9 7" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div class="node" id="b2"><div class="node-dot">PVT</div><div class="node-text"><div class="node-name">Rebuild 10 pivots</div><div class="node-sub">Each rebuilt manually</div></div><div class="node-pill">20 min</div></div>
+    <div class="arrow" id="ba2"><svg width="12" height="14"><path d="M6 0 L6 10 M3 7 L6 11 L9 7" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div class="node" id="b3"><div class="node-dot">CMP</div><div class="node-text"><div class="node-name">Compare yesterday</div><div class="node-sub">Two files, side by side</div></div><div class="node-pill">25 min</div></div>
+    <div class="arrow" id="ba3"><svg width="12" height="14"><path d="M6 0 L6 10 M3 7 L6 11 L9 7" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div class="node" id="b4"><div class="node-dot">CLR</div><div class="node-text"><div class="node-name">Colour code cells</div><div class="node-sub">Green / red, by hand</div></div><div class="node-pill">10 min</div></div>
+    <div class="arrow" id="ba4"><svg width="12" height="14"><path d="M6 0 L6 10 M3 7 L6 11 L9 7" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div class="node" id="b5"><div class="node-dot">TXT</div><div class="node-text"><div class="node-name">Write analysis</div><div class="node-sub">Typed from scratch</div></div><div class="node-pill">15 min</div></div>
+    <div class="arrow" id="ba5"><svg width="12" height="14"><path d="M6 0 L6 10 M3 7 L6 11 L9 7" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div class="node" id="b6"><div class="node-dot">@</div><div class="node-text"><div class="node-name">Send per leader</div><div class="node-sub">Re-filter &amp; email one by one</div></div><div class="node-pill">20 min</div></div>
+  </div>
+
+  <div class="a">
+    <div class="col-head a">After — automated</div>
+    <div class="node" id="a0"><div class="node-dot">IN</div><div class="node-text"><div class="node-name">Drop in 2 files</div><div class="node-sub">Today + yesterday CRM exports</div></div><div class="node-pill">manual</div></div>
+    <div class="arrow" id="aa0"><svg width="12" height="14"><path d="M6 0 L6 10 M3 7 L6 11 L9 7" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div class="node" id="a1"><div class="node-dot">PQ</div><div class="node-text"><div class="node-name">Power Query ETL</div><div class="node-sub">Clean, merge, standardise</div></div><div class="node-pill auto">auto</div></div>
+    <div class="arrow" id="aa1"><svg width="12" height="14"><path d="M6 0 L6 10 M3 7 L6 11 L9 7" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div class="node" id="a2"><div class="node-dot">PP</div><div class="node-text"><div class="node-name">Power Pivot</div><div class="node-sub">Integrate &amp; compute variances</div></div><div class="node-pill auto">auto</div></div>
+    <div class="arrow" id="aa2"><svg width="12" height="14"><path d="M6 0 L6 10 M3 7 L6 11 L9 7" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div class="node" id="a3"><div class="node-dot">10x</div><div class="node-text"><div class="node-name">Pivots + formatting</div><div class="node-sub">All 10 auto-populate &amp; colour</div></div><div class="node-pill auto">auto</div></div>
+    <div class="arrow" id="aa3"><svg width="12" height="14"><path d="M6 0 L6 10 M3 7 L6 11 L9 7" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div class="node" id="a4"><div class="node-dot">VBA</div><div class="node-text"><div class="node-name">Select &amp; run macro</div><div class="node-sub">One slicer pick, one click</div></div><div class="node-pill">manual</div></div>
+    <div class="arrow" id="aa4"><svg width="12" height="14"><path d="M6 0 L6 10 M3 7 L6 11 L9 7" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div class="node" id="a5"><div class="node-dot">@</div><div class="node-text"><div class="node-name">Emails sent per leader</div><div class="node-sub">Personalised, filtered, done</div></div><div class="node-pill auto">auto</div></div>
+  </div>
+
+</div>
+
+<div class="timer-row">
+  <div class="timer-chip b"><div class="timer-val">~2 hrs</div><div class="timer-lbl">Before — daily</div></div>
+  <div class="timer-chip a"><div class="timer-val">~5 min</div><div class="timer-lbl">After — daily</div></div>
+</div>
+<div class="saving-chip" id="saving-chip">460+ hours saved every year — the equivalent of 11 working weeks</div>
+
+<script>
+const bN = 7, aN = 6, bD = 950, aD = 430;
+let bStep = -1, aStep = -1, bT, aT, loopT;
+
+function light(prefix, count, step) {
+  const isB = prefix === 'b';
+  const arPrefix = isB ? 'ba' : 'aa';
+  for (let i = 0; i < count; i++) {
+    const n = document.getElementById(prefix + i);
+    const ar = document.getElementById(arPrefix + i);
+    if (!n) continue;
+    n.classList.remove('lit', 'done');
+    if (i < step) n.classList.add('done');
+    else if (i === step) n.classList.add('lit');
+    if (ar) ar.classList.toggle('lit', i < step);
+  }
+}
+
+function reset() {
+  clearInterval(bT); clearInterval(aT); clearTimeout(loopT);
+  bStep = -1; aStep = -1;
+  document.getElementById('saving-chip').classList.remove('show');
+  light('b', bN, -1); light('a', aN, -1);
+}
+
+function cycle() {
+  reset();
+  setTimeout(() => {
+    bT = setInterval(() => { bStep++; light('b', bN, bStep); if (bStep >= bN) clearInterval(bT); }, bD);
+    aT = setInterval(() => { aStep++; light('a', aN, aStep); if (aStep >= aN) { clearInterval(aT); setTimeout(() => document.getElementById('saving-chip').classList.add('show'), 400); } }, aD);
+  }, 400);
+  const total = Math.max(bN * bD, aN * aD) + 2600;
+  loopT = setTimeout(cycle, total);
+}
+
+cycle();
+</script>
+</body>
+</html>
