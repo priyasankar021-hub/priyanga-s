@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Dashboard Portfolio — Priyanga Sivasankaran</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;1,9..144,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{--bg:#f7f8fc;--surface:#fff;--surface2:#f0f4f8;--border:#e2e8f0;--border2:#cbd5e1;--text:#0f172a;--text2:#475569;--text3:#94a3b8;--teal:#0d9488;--teal-l:#f0fdfa;--teal-m:#ccfbf1;--teal-d:#0f766e;--mono:'DM Mono',monospace;--serif:'Fraunces',serif;--sans:'DM Sans',sans-serif;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:15px;line-height:1.7;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 3rem;height:56px;background:rgba(247,248,252,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
+.nav-back{font-family:var(--mono);font-size:12px;color:var(--text2);text-decoration:none;letter-spacing:.06em;transition:color .2s;}
+.nav-back:hover{color:var(--teal);}
+.nav-lbl{font-family:var(--mono);font-size:11px;color:var(--text3);}
+.page{max-width:960px;margin:0 auto;padding:7rem 3rem 5rem;}
+.case-tag{font-family:var(--mono);font-size:10px;color:var(--teal);letter-spacing:.14em;text-transform:uppercase;margin-bottom:1rem;display:flex;align-items:center;gap:.75rem;}
+.case-tag::before{content:'';display:inline-block;width:20px;height:1px;background:var(--teal);}
+h1{font-family:var(--serif);font-size:clamp(1.8rem,4vw,2.8rem);font-weight:300;line-height:1.15;color:var(--text);letter-spacing:-.02em;margin-bottom:.75rem;}
+h1 em{font-style:italic;color:var(--teal);}
+.intro{font-size:15px;color:var(--text2);line-height:1.8;max-width:680px;margin-bottom:1.5rem;border-left:3px solid var(--teal);padding-left:1rem;}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:2.5rem;padding-bottom:2rem;border-bottom:1px solid var(--border);}
+.chip{font-family:var(--mono);font-size:10px;padding:3px 10px;border-radius:4px;background:var(--surface);color:var(--text2);border:1px solid var(--border2);}
+.db-entry{margin-bottom:4rem;}
+.db-entry+.db-entry{border-top:1px solid var(--border);padding-top:4rem;}
+.db-header{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:1.25rem;flex-wrap:wrap;}
+.db-meta{display:flex;flex-direction:column;gap:4px;}
+.db-num{font-family:var(--mono);font-size:10px;color:var(--teal);letter-spacing:.1em;}
+.db-title{font-family:var(--serif);font-size:1.5rem;font-weight:300;color:var(--text);}
+.db-pills{display:flex;gap:6px;flex-wrap:wrap;}
+.db-pill{font-family:var(--mono);font-size:10px;padding:3px 9px;border-radius:4px;background:var(--surface);border:1px solid var(--border);color:var(--text3);}
+.db-mock{background:#eef2f7;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:1.25rem;}
+.db-desc{font-size:14px;color:var(--text2);line-height:1.85;margin-bottom:.85rem;}
+.db-insight{background:var(--teal-l);border:1px solid var(--teal-m);border-left:3px solid var(--teal);border-radius:0 8px 8px 0;padding:.85rem 1.1rem;font-size:13px;color:var(--text2);line-height:1.7;}
+.db-insight strong{color:var(--teal-d);font-weight:500;}
+.m-wrap{font-family:var(--mono);font-size:8px;padding:12px;}
+.m-title{background:#1e3a5f;color:#fff;text-align:center;padding:7px 12px;font-size:11px;letter-spacing:.07em;border-radius:5px 5px 0 0;margin:-12px -12px 10px;}
+.m-row{display:flex;gap:8px;margin-bottom:8px;}
+.m-card{background:#fff;border:.5px solid #c8d6e5;border-radius:5px;padding:9px;flex:1;}
+.m-ct{font-size:8px;color:#64748b;text-transform:uppercase;letter-spacing:.05em;border-bottom:.5px solid #e8eef4;padding-bottom:4px;margin-bottom:6px;font-weight:500;}
+.m-kpi{background:#f8fafc;border:.5px solid #e2e8f0;border-radius:4px;padding:8px 10px;}
+.m-kv{font-size:18px;font-weight:500;color:#0f172a;line-height:1;}
+.m-kl{font-size:8px;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em;margin-top:3px;}
+.m-bars{display:flex;align-items:flex-end;gap:4px;}
+.m-bc{display:flex;flex-direction:column;align-items:center;gap:2px;flex:1;}
+.m-b{width:100%;border-radius:2px 2px 0 0;}
+.m-bl{font-size:8px;color:#94a3b8;}
+.m-bv{font-size:8px;color:#0f172a;font-weight:500;}
+.m-hrow{display:flex;align-items:center;gap:6px;margin-bottom:4px;}
+.m-hlbl{font-size:8px;color:#475569;width:90px;flex-shrink:0;text-align:right;}
+.m-htrack{flex:1;height:12px;background:#f0f4f8;border-radius:2px;overflow:hidden;}
+.m-hfill{height:100%;border-radius:2px;}
+.m-hval{font-size:8px;color:#0f172a;font-weight:500;width:36px;flex-shrink:0;}
+.m-table{width:100%;border-collapse:collapse;}
+.m-table th{font-size:8px;color:#94a3b8;padding:3px 6px;border-bottom:.5px solid #e2e8f0;text-align:left;}
+.m-table td{font-size:8px;color:#475569;padding:3px 6px;border-bottom:.5px solid #f1f5f9;}
+.m-table tr:last-child td{border-bottom:none;}
+.tracker-year{background:#fff;border:.5px solid #c8d6e5;border-radius:5px;margin-bottom:8px;padding:8px 10px;}
+.tracker-year-title{font-size:8px;font-weight:500;color:#0f172a;text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px;padding-bottom:4px;border-bottom:.5px solid #e8eef4;}
+.note{background:#fffbeb;border:1px solid #fde68a;border-radius:6px;padding:.85rem 1.1rem;font-size:12px;color:#92400e;margin-top:2rem;display:flex;gap:.6rem;}
+.page-nav{display:flex;justify-content:space-between;padding-top:2.5rem;border-top:1px solid var(--border);margin-top:3rem;flex-wrap:wrap;gap:1rem;}
+.page-nav a{font-family:var(--mono);font-size:11px;color:var(--text2);text-decoration:none;padding:.55rem 1.1rem;border:1px solid var(--border);border-radius:5px;background:var(--surface);transition:all .2s;}
+.page-nav a:hover{border-color:var(--teal);color:var(--teal);}
+</style>
+</head>
+<body>
+<nav>
+  <a class="nav-back" href="https://priyasankar021-hub.github.io/priyanga-s/">&larr; Back to Portfolio</a>
+  <span class="nav-lbl">case study &middot; dashboard portfolio</span>
+</nav>
+<div class="page">
+
+<div class="case-tag">Case Study &middot; Business Intelligence &amp; Dashboard Design</div>
+<h1>Dashboards built for <em>real decisions</em> &mdash;<br/>across roles, tools, and organisations</h1>
+<p class="intro">A collection of dashboards and analytical views built across Tech Mahindra and Bosch Global Software Technologies &mdash; each solving a specific business problem, from daily pipeline visibility to multi-year anonymised performance tracking. Every piece was built in Excel and used in live business reviews.</p>
+<div class="chips">
+  <span class="chip">Excel Advanced</span><span class="chip">Power Pivot</span><span class="chip">Pivot Tables</span>
+  <span class="chip">Dashboard Design</span><span class="chip">KPI Design</span><span class="chip">Interactive Slicers</span>
+  <span class="chip">Conditional Formatting</span><span class="chip">GETPIVOTDATA</span><span class="chip">Combo Charts</span>
+  <span class="chip">Aging Analysis</span><span class="chip">PowerPoint</span><span class="chip">Sales Operations</span>
+</div>
+
+<!-- 01 LEADERSHIP -->
+<div class="db-entry">
+  <div class="db-header">
+    <div class="db-meta"><span class="db-num">01 &mdash; Most Recent</span><div class="db-title">Sales &amp; Business Leadership Dashboard</div></div>
+    <div class="db-pills"><span class="db-pill">Tech Mahindra Limited</span><span class="db-pill">Excel &rarr; Power BI</span></div>
+  </div>
+  <div class="db-mock" style="padding:0;">
+    <iframe src="dashboard-mock.html" style="width:100%;height:700px;border:none;display:block;" title="Sales &amp; Business Leadership Dashboard"></iframe>
+  </div>
+  <p class="db-desc">A comprehensive weekly leadership dashboard consolidating five data sources &mdash; CRM pipeline, leads, billing, revenue actuals, and resource data &mdash; into a single interactive view used by 10+ sales and business leaders. Covered pipeline by stage, monthly movement, regional ownership, lead scoring, pipeline aging, revenue by vertical and deal size, billing KPIs, and billed vs unbilled breakdown &mdash; all filterable by region and business vertical. Later migrated to Power BI by the organisation.</p>
+  <div class="db-insight"><strong>Design challenge:</strong> consolidating five separate data sources with different formats into one coherent model, then designing a layout where each leader could drill into their specific region or vertical without needing a custom report built for them.</div>
+</div>
+
+<!-- 02 TRACKER -->
+<div class="db-entry">
+  <div class="db-header">
+    <div class="db-meta"><span class="db-num">02</span><div class="db-title">Sales Manager Performance Tracker</div></div>
+    <div class="db-pills"><span class="db-pill">Bosch Global Software Technologies</span><span class="db-pill">Excel &rarr; PowerPoint</span></div>
+  </div>
+  <div class="db-mock" style="padding:12px;">
+    <div style="background:#1e3a5f;color:#fff;text-align:center;padding:7px 12px;font-size:11px;letter-spacing:.07em;border-radius:5px 5px 0 0;margin:-12px -12px 10px;">Sales Manager Performance &mdash; Multi-Year TCV ($M)</div>
+    <div id="tracker-wrap">
+      <div class="tracker-year"><div class="tracker-year-title">2024 &mdash; TCV ($M)</div><canvas id="c2024" height="160"></canvas></div>
+      <div class="tracker-year"><div class="tracker-year-title">2023 &mdash; TCV ($M)</div><canvas id="c2023" height="160"></canvas></div>
+      <div class="tracker-year"><div class="tracker-year-title">2022 &mdash; TCV ($M)</div><canvas id="c2022" height="160"></canvas></div>
+      <div class="tracker-year"><div class="tracker-year-title">2021 &mdash; TCV ($M)</div><canvas id="c2021" height="160"></canvas></div>
+      <div style="background:#fff;border:.5px solid #c8d6e5;border-radius:5px;padding:10px 14px;">
+        <div style="display:flex;flex-wrap:wrap;gap:20px;">
+          <div><div style="font-size:8px;font-weight:500;color:#0f172a;text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px;">Role colour coding</div>
+            <div style="display:flex;gap:12px;">
+              <div style="display:flex;align-items:center;gap:5px;"><div style="width:16px;height:12px;background:#64748b;border-radius:2px;"></div><span style="font-size:8px;color:#475569;">Team Lead</span></div>
+              <div style="display:flex;align-items:center;gap:5px;"><div style="width:16px;height:12px;background:#1e3a5f;border-radius:2px;"></div><span style="font-size:8px;color:#475569;">Hunter</span></div>
+              <div style="display:flex;align-items:center;gap:5px;"><div style="width:16px;height:12px;background:#d97706;border-radius:2px;"></div><span style="font-size:8px;color:#475569;">Farmer</span></div>
+            </div>
+          </div>
+          <div><div style="font-size:8px;font-weight:500;color:#0f172a;text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px;">Benchmark lines</div>
+            <div style="display:flex;gap:12px;">
+              <div style="display:flex;align-items:center;gap:5px;"><svg width="24" height="8"><line x1="0" y1="4" x2="24" y2="4" stroke="#64748b" stroke-width="1.5" stroke-dasharray="3,2"/></svg><span style="font-size:8px;color:#475569;">Team Lead</span></div>
+              <div style="display:flex;align-items:center;gap:5px;"><svg width="24" height="8"><line x1="0" y1="4" x2="24" y2="4" stroke="#1e3a5f" stroke-width="1.5" stroke-dasharray="3,2"/></svg><span style="font-size:8px;color:#475569;">Hunter</span></div>
+              <div style="display:flex;align-items:center;gap:5px;"><svg width="24" height="8"><line x1="0" y1="4" x2="24" y2="4" stroke="#d97706" stroke-width="1.5" stroke-dasharray="3,2"/></svg><span style="font-size:8px;color:#475569;">Farmer</span></div>
+            </div>
+          </div>
+          <div><div style="font-size:8px;font-weight:500;color:#0f172a;text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px;">EAV1 Target Achievement</div>
+            <div style="display:flex;gap:12px;">
+              <div style="display:flex;align-items:center;gap:5px;"><div style="width:10px;height:10px;border-radius:50%;background:#16a34a;"></div><span style="font-size:8px;color:#475569;">Achieved</span></div>
+              <div style="display:flex;align-items:center;gap:5px;"><div style="width:10px;height:10px;border-radius:50%;background:#dc2626;"></div><span style="font-size:8px;color:#475569;">Not Achieved</span></div>
+            </div>
+          </div>
+          <div><div style="font-size:8px;font-weight:500;color:#0f172a;text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px;">Movement</div>
+            <div style="display:flex;gap:12px;">
+              <div style="display:flex;align-items:center;gap:5px;"><div style="width:10px;height:10px;border-radius:50%;background:#fbbf24;border:1.5px solid #d97706;"></div><span style="font-size:8px;color:#475569;">Exited</span></div>
+              <div style="display:flex;align-items:center;gap:5px;"><div style="width:10px;height:10px;border-radius:50%;background:#60a5fa;border:1.5px solid #2563eb;"></div><span style="font-size:8px;color:#475569;">Joined</span></div>
+            </div>
+          </div>
+          <div><div style="font-size:8px;font-weight:500;color:#0f172a;text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px;">Growth %</div>
+            <div style="font-size:8px;color:#475569;">EAV2 target vs previous year achievement</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="db-desc">A multi-year TCV performance view covering every sales manager across 2021&ndash;2024, built in Excel and presented in PowerPoint for leadership. Each column represents an anonymised manager (S# codes) with colour coding by role. Dashed benchmark lines show the expected threshold per role. Green and red dots indicate EAV1 target achievement. Growth % shows movement from previous year achievement to next year target. Yellow circles mark exits, blue circles mark joiners.</p>
+  <div class="db-insight"><strong>Design challenge:</strong> showing every manager's performance across four years without revealing names, while simultaneously encoding role, target status, year-on-year growth, and team movement &mdash; so leadership could have a meaningful conversation about each person. The anonymisation constraint drove the entire visual design.</div>
+</div>
+
+<!-- 03 PROJECTION -->
+<div class="db-entry">
+  <div class="db-header">
+    <div class="db-meta"><span class="db-num">03</span><div class="db-title">Projection Summary &mdash; Targets vs Actuals</div></div>
+    <div class="db-pills"><span class="db-pill">Tech Mahindra Limited</span><span class="db-pill">Excel + Power Pivot</span></div>
+  </div>
+  <div class="db-mock"><div class="m-wrap">
+    <div class="m-title">Projection Summary &mdash; Quarterly Revenue Tracking vs Threshold &amp; Goal Targets</div>
+    <div class="m-row">
+      <div class="m-card" style="flex:.5;">
+        <div class="m-ct">Filters</div>
+        <div style="font-size:8px;color:#94a3b8;margin-bottom:4px;text-transform:uppercase;">Account</div>
+        <div style="display:flex;flex-direction:column;gap:3px;margin-bottom:8px;">
+          <span style="font-size:9px;padding:2px 7px;background:#dbeafe;color:#1e40af;border-radius:3px;">Acc 4 &#10003;</span>
+          <span style="font-size:9px;padding:2px 7px;background:#f8fafc;color:#64748b;border-radius:3px;">Acc 1</span>
+          <span style="font-size:9px;padding:2px 7px;background:#f8fafc;color:#64748b;border-radius:3px;">Acc 2</span>
+          <span style="font-size:9px;padding:2px 7px;background:#f8fafc;color:#64748b;border-radius:3px;">Acc 3</span>
+          <span style="font-size:9px;padding:2px 7px;background:#f8fafc;color:#64748b;border-radius:3px;">Acc 5</span>
+        </div>
+        <div style="font-size:8px;color:#94a3b8;margin-bottom:4px;text-transform:uppercase;">Pillar</div>
+        <div style="display:flex;flex-direction:column;gap:3px;">
+          <span style="font-size:9px;padding:2px 7px;background:#dbeafe;color:#1e40af;border-radius:3px;">Pillar 3 &#10003;</span>
+          <span style="font-size:9px;padding:2px 7px;background:#f8fafc;color:#64748b;border-radius:3px;">Pillar 1</span>
+          <span style="font-size:9px;padding:2px 7px;background:#f8fafc;color:#64748b;border-radius:3px;">Pillar 2</span>
+        </div>
+      </div>
+      <div class="m-card" style="flex:2;">
+        <div class="m-ct">Revenue projection vs targets &mdash; FY24 ($M)</div>
+        <table class="m-table" style="font-size:9px;margin-top:4px;">
+          <thead><tr><th style="width:120px;"></th><th style="text-align:center;color:#1e3a5f;">Q1'24 A</th><th style="text-align:center;color:#1e3a5f;">Q2'24 A</th><th style="text-align:center;color:#1e3a5f;">Q3'24 A</th><th style="text-align:center;color:#2563eb;">Q4'24</th><th style="text-align:center;font-weight:500;">FY24</th></tr></thead>
+          <tbody>
+            <tr><td style="font-weight:500;color:#0f172a;">Projection (P5+P4.5+P4)</td><td style="text-align:center;font-weight:500;">1.14</td><td style="text-align:center;font-weight:500;">1.29</td><td style="text-align:center;font-weight:500;">1.35</td><td style="text-align:center;font-weight:500;">1.35</td><td style="text-align:center;font-weight:500;font-size:10px;">5.12</td></tr>
+            <tr style="background:#f0fdf4;"><td style="color:#64748b;">QoQ Growth</td><td style="text-align:center;color:#94a3b8;">&mdash;</td><td style="text-align:center;color:#15803d;font-weight:500;">+13%</td><td style="text-align:center;color:#15803d;font-weight:500;">+5%</td><td style="text-align:center;color:#94a3b8;">0%</td><td style="text-align:center;color:#94a3b8;">&mdash;</td></tr>
+            <tr><td style="color:#64748b;">Threshold Target</td><td style="text-align:center;">0.70</td><td style="text-align:center;">0.72</td><td style="text-align:center;">0.75</td><td style="text-align:center;">0.78</td><td style="text-align:center;font-weight:500;">3.0</td></tr>
+            <tr style="background:#fef9ec;"><td style="color:#64748b;">Goal Target</td><td style="text-align:center;">0.75</td><td style="text-align:center;">0.77</td><td style="text-align:center;">0.80</td><td style="text-align:center;">0.83</td><td style="text-align:center;font-weight:500;">3.2</td></tr>
+            <tr><td style="color:#94a3b8;">Pipeline Required (GR)</td><td style="text-align:center;color:#94a3b8;">0.00</td><td style="text-align:center;color:#94a3b8;">0.00</td><td style="text-align:center;color:#94a3b8;">0.00</td><td style="text-align:center;color:#94a3b8;">0.00</td><td style="text-align:center;color:#94a3b8;">0.00</td></tr>
+          </tbody>
+        </table>
+        <div style="margin-top:10px;"><div class="m-ct">Pipeline by stage ($M)</div>
+        <div style="display:flex;gap:5px;margin-top:5px;">
+          <div class="m-kpi" style="flex:1;"><div style="font-size:7px;color:#94a3b8;">P0</div><div style="font-size:13px;font-weight:500;">1.14</div></div>
+          <div class="m-kpi" style="flex:1;"><div style="font-size:7px;color:#94a3b8;">P1</div><div style="font-size:13px;font-weight:500;">1.29</div></div>
+          <div class="m-kpi" style="flex:1;"><div style="font-size:7px;color:#94a3b8;">P2</div><div style="font-size:13px;font-weight:500;">1.35</div></div>
+          <div class="m-kpi" style="flex:1;"><div style="font-size:7px;color:#94a3b8;">P3/P3.1</div><div style="font-size:13px;font-weight:500;">1.35</div></div>
+          <div class="m-kpi" style="flex:1;background:#dbeafe;border-color:#93c5fd;"><div style="font-size:7px;color:#1e40af;">P4</div><div style="font-size:13px;font-weight:500;color:#1e40af;">0.32</div></div>
+        </div></div>
+      </div>
+    </div>
+  </div></div>
+  <p class="db-desc">Quarterly revenue tracking comparing actuals against Threshold and Goal targets, with QoQ growth, pipeline requirements by stage, and full-year projection &mdash; filterable by account and pillar. Built using GETPIVOTDATA formulas connected to a Power Pivot model so the view always reflected live data without manual updates.</p>
+  <div class="db-insight"><strong>Design challenge:</strong> using GETPIVOTDATA to pull live figures dynamically from the pivot model into a structured summary table &mdash; so the view stayed current without anyone manually updating it before each weekly review.</div>
+</div>
+
+<!-- 04 ACCOUNT -->
+<div class="db-entry">
+  <div class="db-header">
+    <div class="db-meta"><span class="db-num">04</span><div class="db-title">Account Performance Dashboard</div></div>
+    <div class="db-pills"><span class="db-pill">Tech Mahindra Limited</span><span class="db-pill">Excel</span></div>
+  </div>
+  <div class="db-mock"><div class="m-wrap">
+    <div style="display:flex;align-items:center;justify-content:space-between;background:#1e3a5f;color:#fff;padding:8px 14px;margin:-12px -12px 10px;border-radius:5px 5px 0 0;">
+      <span style="font-size:11px;letter-spacing:.06em;font-weight:500;">Account Performance Dashboard</span>
+      <span style="background:#fff;color:#1e3a5f;font-size:9px;font-weight:500;padding:3px 10px;border-radius:3px;">Acc 5 &#9660;</span>
+    </div>
+    <div class="m-row">
+      <div class="m-card" style="flex:1;"><div class="m-ct">Revenue Trend ($M)</div>
+        <svg width="100%" height="80" viewBox="0 0 160 80">
+          <rect x="10" y="62" width="22" height="10" fill="#bfdbfe" rx="1"/><rect x="42" y="46" width="22" height="26" fill="#bfdbfe" rx="1"/><rect x="74" y="20" width="22" height="52" fill="#2563eb" rx="1"/><rect x="106" y="10" width="22" height="62" fill="#1e40af" rx="1"/>
+          <text x="21" y="58" font-size="9" fill="#0f172a" text-anchor="middle" font-weight="500">0.06</text><text x="53" y="42" font-size="9" fill="#0f172a" text-anchor="middle" font-weight="500">0.76</text><text x="85" y="16" font-size="9" fill="#0f172a" text-anchor="middle" font-weight="500">2.86</text><text x="117" y="6" font-size="9" fill="#0f172a" text-anchor="middle" font-weight="500">3.08</text>
+          <text x="21" y="78" font-size="8" fill="#94a3b8" text-anchor="middle">H1'20</text><text x="53" y="78" font-size="8" fill="#94a3b8" text-anchor="middle">H2'20</text><text x="85" y="78" font-size="8" fill="#94a3b8" text-anchor="middle">H1'21</text><text x="117" y="78" font-size="8" fill="#94a3b8" text-anchor="middle">H2'21P</text>
+        </svg>
+      </div>
+      <div class="m-card" style="flex:1;"><div class="m-ct">Target vs Actuals ($M)</div>
+        <svg width="100%" height="80" viewBox="0 0 160 80">
+          <rect x="20" y="12" width="30" height="60" fill="#2563eb" rx="1"/><rect x="65" y="46" width="30" height="26" fill="#bfdbfe" rx="1"/><rect x="110" y="4" width="30" height="68" fill="#1e40af" rx="1"/>
+          <text x="35" y="8" font-size="9" fill="#0f172a" text-anchor="middle" font-weight="500">5.0</text><text x="80" y="42" font-size="9" fill="#0f172a" text-anchor="middle" font-weight="500">1.3</text><text x="125" y="0" font-size="9" fill="#0f172a" text-anchor="middle" font-weight="500">5.94</text>
+          <text x="35" y="78" font-size="8" fill="#94a3b8" text-anchor="middle">Stretch</text><text x="80" y="78" font-size="8" fill="#94a3b8" text-anchor="middle">Base</text><text x="125" y="78" font-size="8" fill="#94a3b8" text-anchor="middle">FY21 Proj</text>
+        </svg>
+      </div>
+      <div class="m-card" style="flex:1;"><div class="m-ct">Pipeline Trend ($M)</div>
+        <svg width="100%" height="80" viewBox="0 0 160 80">
+          <polyline points="10,10 36,28 62,50 88,40 114,54 140,58" fill="none" stroke="#1e3a5f" stroke-width="2" stroke-linejoin="round"/>
+          <circle cx="10" cy="10" r="3" fill="#1e3a5f"/><circle cx="36" cy="28" r="3" fill="#1e3a5f"/><circle cx="62" cy="50" r="3" fill="#2563eb"/><circle cx="88" cy="40" r="3" fill="#2563eb"/><circle cx="114" cy="54" r="3" fill="#60a5fa"/><circle cx="140" cy="58" r="3" fill="#60a5fa"/>
+          <text x="10" y="7" font-size="8" fill="#0f172a" text-anchor="middle">49.2</text><text x="36" y="24" font-size="8" fill="#0f172a" text-anchor="middle">21.4</text><text x="62" y="46" font-size="8" fill="#0f172a">17.6</text><text x="88" y="36" font-size="8" fill="#0f172a">24.0</text><text x="114" y="50" font-size="8" fill="#0f172a">6.1</text><text x="140" y="54" font-size="8" fill="#0f172a">7.9</text>
+          <text x="10" y="76" font-size="7" fill="#94a3b8" text-anchor="middle">Apr</text><text x="36" y="76" font-size="7" fill="#94a3b8" text-anchor="middle">May</text><text x="62" y="76" font-size="7" fill="#94a3b8" text-anchor="middle">Jul</text><text x="88" y="76" font-size="7" fill="#94a3b8" text-anchor="middle">Sep</text><text x="114" y="76" font-size="7" fill="#94a3b8" text-anchor="middle">Oct</text><text x="140" y="76" font-size="7" fill="#94a3b8" text-anchor="middle">Nov</text>
+        </svg>
+      </div>
+    </div>
+    <div class="m-row">
+      <div class="m-card" style="flex:1.4;background:#1e3a5f;color:#fff;padding:12px 14px;">
+        <div style="font-size:9px;font-weight:500;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px;border-bottom:1px solid rgba(255,255,255,.15);padding-bottom:5px;">H1 Performance &amp; Learnings</div>
+        <div style="font-size:9px;font-weight:500;margin-bottom:3px;">What Went Well</div>
+        <div style="font-size:9px;opacity:.85;margin-bottom:6px;line-height:1.6;">&bull; Crossed 100+ FTEs, EBDTA improved to 35%+<br/>&bull; Multiple client wins across verticals</div>
+        <div style="font-size:9px;font-weight:500;margin-bottom:3px;">What Went Wrong</div>
+        <div style="font-size:9px;opacity:.85;margin-bottom:6px;line-height:1.6;">&bull; Delay in hiring, 20+ open positions<br/>&bull; Lack of Solution Architects</div>
+        <div style="font-size:9px;font-weight:500;border-top:1px solid rgba(255,255,255,.15);padding-top:5px;">H2 Plan to Reach Target</div>
+      </div>
+      <div class="m-card" style="flex:1;">
+        <div class="m-ct">Key Focus Areas</div>
+        <div style="font-size:9px;color:#475569;line-height:1.8;">&bull; Cloud Transformation &mdash; Azure, .Net<br/>&bull; ERP Transformation<br/>&bull; Digital modernisation</div>
+        <div class="m-ct" style="margin-top:8px;">Key Opportunities</div>
+        <div style="font-size:9px;color:#475569;line-height:1.8;">&bull; RFP 1 &mdash; Cloud migration<br/>&bull; RFP 2 &mdash; ERP modernisation</div>
+      </div>
+      <div class="m-card" style="flex:1;">
+        <div class="m-ct">Support Required</div>
+        <div style="font-size:9px;color:#475569;line-height:1.8;">&bull; Fill 25+ open positions<br/>&bull; Strengthen Delivery &amp; Presales<br/>&bull; Expedite EHC approvals<br/>&bull; Assign Azure Architects</div>
+      </div>
+    </div>
+  </div></div>
+  <p class="db-desc">A single-page account review dashboard combining revenue trend, target vs actuals, pipeline trend, H1 performance and learnings, key focus areas, pipeline opportunities, and support required &mdash; all switchable per account via a dropdown.</p>
+  <div class="db-insight"><strong>Design challenge:</strong> fitting both quantitative data and qualitative narrative into one printable view that told the full account story end-to-end in a single leadership review session.</div>
+</div>
+
+<!-- 05 PIPELINE -->
+<div class="db-entry">
+  <div class="db-header">
+    <div class="db-meta"><span class="db-num">05</span><div class="db-title">Pipeline Dashboard</div></div>
+    <div class="db-pills"><span class="db-pill">Tech Mahindra Limited</span><span class="db-pill">Excel</span></div>
+  </div>
+  <div class="db-mock"><div class="m-wrap">
+    <div class="m-title">Pipeline Dashboard &mdash; Sales Stage, KPIs, Trend &amp; Filters</div>
+    <div class="m-row">
+      <div class="m-card" style="flex:1.3;">
+        <div class="m-ct">Sales Stage TCV ($M)</div>
+        <div class="m-bars" style="height:90px;align-items:flex-end;">
+          <div class="m-bc"><div class="m-b" style="height:8px;background:#1e3a5f;"></div><div class="m-bv">2.1</div><div class="m-bl">P4</div></div>
+          <div class="m-bc"><div class="m-b" style="height:4px;background:#1e3a5f;"></div><div class="m-bv">0.4</div><div class="m-bl">P3</div></div>
+          <div class="m-bc"><div class="m-b" style="height:36px;background:#2563eb;"></div><div class="m-bv">11.9</div><div class="m-bl">P3.1</div></div>
+          <div class="m-bc"><div class="m-b" style="height:22px;background:#60a5fa;"></div><div class="m-bv">7.0</div><div class="m-bl">P2</div></div>
+          <div class="m-bc"><div class="m-b" style="height:34px;background:#93c5fd;"></div><div class="m-bv">10.9</div><div class="m-bl">P1</div></div>
+          <div class="m-bc"><div class="m-b" style="height:90px;background:#bfdbfe;border:.5px solid #93c5fd;"></div><div class="m-bv">87.4</div><div class="m-bl">P0</div></div>
+        </div>
+      </div>
+      <div class="m-card" style="flex:1;">
+        <div class="m-ct">KPI Tiles</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;">
+          <div class="m-kpi"><div class="m-kv">85</div><div class="m-kl">Opp Count</div></div>
+          <div class="m-kpi"><div class="m-kv">23</div><div class="m-kl">Hibernate</div></div>
+          <div class="m-kpi"><div class="m-kv" style="font-size:14px;">$150M</div><div class="m-kl">Total TCV</div></div>
+          <div class="m-kpi"><div class="m-kv">3</div><div class="m-kl">Alliances</div></div>
+          <div class="m-kpi"><div class="m-kv" style="font-size:14px;">$13.9M</div><div class="m-kl">Total ACV</div></div>
+          <div class="m-kpi"><div class="m-kv">19</div><div class="m-kl">Competencies</div></div>
+        </div>
+      </div>
+      <div class="m-card" style="flex:1.2;">
+        <div class="m-ct">Pipeline Trend</div>
+        <svg width="100%" height="80" viewBox="0 0 200 80">
+          <polyline points="20,20 60,24 100,36 140,30 180,36" fill="none" stroke="#1e3a5f" stroke-width="2" stroke-linejoin="round"/>
+          <circle cx="20" cy="20" r="3.5" fill="#1e3a5f"/><circle cx="60" cy="24" r="3.5" fill="#1e3a5f"/><circle cx="100" cy="36" r="3.5" fill="#2563eb"/><circle cx="140" cy="30" r="3.5" fill="#2563eb"/><circle cx="180" cy="36" r="3.5" fill="#60a5fa"/>
+          <text x="20" y="14" font-size="9" fill="#0f172a" text-anchor="middle" font-weight="500">168</text><text x="60" y="18" font-size="9" fill="#0f172a" text-anchor="middle" font-weight="500">162</text><text x="100" y="30" font-size="9" fill="#0f172a" text-anchor="middle" font-weight="500">158</text><text x="140" y="24" font-size="9" fill="#0f172a" text-anchor="middle" font-weight="500">155</text><text x="180" y="30" font-size="9" fill="#0f172a" text-anchor="middle" font-weight="500">150</text>
+          <text x="20" y="72" font-size="8" fill="#94a3b8" text-anchor="middle">Q1'23</text><text x="60" y="72" font-size="8" fill="#94a3b8" text-anchor="middle">Q2'23</text><text x="100" y="72" font-size="8" fill="#94a3b8" text-anchor="middle">Q3'23</text><text x="140" y="72" font-size="8" fill="#94a3b8" text-anchor="middle">Q4'23</text><text x="180" y="72" font-size="8" fill="#94a3b8" text-anchor="middle">Q1'24</text>
+        </svg>
+      </div>
+    </div>
+  </div></div>
+  <p class="db-desc">A live pipeline view showing opportunity distribution across sales stages (P0&ndash;P4), KPI tiles for TCV, ACV, opportunity count, alliances, and competencies, a pipeline trend line across quarters, and interactive filters for close date, alliance partner, and competency area.</p>
+  <div class="db-insight"><strong>Design challenge:</strong> showing the full pipeline from P0 to P4 on the same axis &mdash; where P0 dwarfs everything else &mdash; while keeping the other stages readable and actionable for weekly pipeline health reviews.</div>
+</div>
+
+<!-- 06 EBITDA -->
+<div class="db-entry">
+  <div class="db-header">
+    <div class="db-meta"><span class="db-num">06</span><div class="db-title">Historical Revenue &amp; EBITDA Analysis</div></div>
+    <div class="db-pills"><span class="db-pill">Tech Mahindra Limited</span><span class="db-pill">Excel</span></div>
+  </div>
+  <div class="db-mock"><div class="m-wrap">
+    <div class="m-title">Historical Revenue ($M) vs EBITDA % &mdash; FY20 to FY24 &middot; Account &amp; Pillar Slicer</div>
+    <div class="m-row">
+      <div class="m-card" style="flex:2.2;">
+        <div class="m-ct">Revenue total ($M) &mdash; bars &nbsp;|&nbsp; EBITDA % &mdash; line</div>
+        <svg width="100%" height="150" viewBox="0 0 480 150">
+          <rect x="20" y="30" width="60" height="100" fill="#1e3a5f" rx="2"/><rect x="115" y="50" width="60" height="80" fill="#1e3a5f" rx="2"/><rect x="210" y="72" width="60" height="58" fill="#2563eb" rx="2"/><rect x="305" y="36" width="60" height="94" fill="#1e3a5f" rx="2"/><rect x="395" y="10" width="60" height="120" fill="#1e40af" rx="2"/>
+          <text x="50" y="24" font-size="11" fill="#0f172a" text-anchor="middle" font-weight="500">64.9</text><text x="145" y="44" font-size="11" fill="#0f172a" text-anchor="middle" font-weight="500">53.7</text><text x="240" y="66" font-size="11" fill="#0f172a" text-anchor="middle" font-weight="500">43.0</text><text x="335" y="30" font-size="11" fill="#0f172a" text-anchor="middle" font-weight="500">62.9</text><text x="425" y="4" font-size="11" fill="#0f172a" text-anchor="middle" font-weight="500">80.6</text>
+          <text x="50" y="140" font-size="10" fill="#94a3b8" text-anchor="middle">FY20</text><text x="145" y="140" font-size="10" fill="#94a3b8" text-anchor="middle">FY21</text><text x="240" y="140" font-size="10" fill="#94a3b8" text-anchor="middle">FY22</text><text x="335" y="140" font-size="10" fill="#94a3b8" text-anchor="middle">FY23</text><text x="425" y="140" font-size="10" fill="#94a3b8" text-anchor="middle">FY24</text>
+          <polyline points="50,52 145,62 240,94 335,66 425,104" fill="none" stroke="#e11d48" stroke-width="2.5" stroke-linejoin="round"/>
+          <circle cx="50" cy="52" r="4" fill="#fff" stroke="#e11d48" stroke-width="2"/><circle cx="145" cy="62" r="4" fill="#fff" stroke="#e11d48" stroke-width="2"/><circle cx="240" cy="94" r="4" fill="#fff" stroke="#e11d48" stroke-width="2"/><circle cx="335" cy="66" r="4" fill="#fff" stroke="#e11d48" stroke-width="2"/><circle cx="425" cy="104" r="4" fill="#fff" stroke="#e11d48" stroke-width="2"/>
+          <text x="50" y="47" font-size="9" fill="#e11d48" text-anchor="middle" font-weight="500">24.9%</text><text x="145" y="57" font-size="9" fill="#e11d48" text-anchor="middle" font-weight="500">27.5%</text><text x="240" y="89" font-size="9" fill="#e11d48" text-anchor="middle" font-weight="500">18.9%</text><text x="335" y="61" font-size="9" fill="#e11d48" text-anchor="middle" font-weight="500">25.9%</text><text x="425" y="99" font-size="9" fill="#e11d48" text-anchor="middle" font-weight="500">18.3%</text>
+        </svg>
+        <div style="display:flex;gap:14px;margin-top:5px;">
+          <div style="display:flex;align-items:center;gap:5px;"><div style="width:14px;height:10px;background:#1e3a5f;border-radius:2px;"></div><span style="font-size:8px;color:#475569;">Revenue ($M)</span></div>
+          <div style="display:flex;align-items:center;gap:5px;"><div style="width:16px;height:2px;background:#e11d48;"></div><div style="width:7px;height:7px;border-radius:50%;background:#fff;border:1.5px solid #e11d48;"></div><span style="font-size:8px;color:#475569;margin-left:3px;">EBITDA %</span></div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;flex:.8;">
+        <div class="m-card">
+          <div class="m-ct">Account filter</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:3px;">
+            <span style="font-size:8px;padding:2px 5px;background:#dbeafe;color:#1e40af;border-radius:2px;">Acc 1 &#10003;</span>
+            <span style="font-size:8px;padding:2px 5px;background:#f8fafc;color:#64748b;border-radius:2px;">Acc 2</span>
+            <span style="font-size:8px;padding:2px 5px;background:#f8fafc;color:#64748b;border-radius:2px;">Acc 3</span>
+            <span style="font-size:8px;padding:2px 5px;background:#f8fafc;color:#64748b;border-radius:2px;">Acc 4</span>
+            <span style="font-size:8px;padding:2px 5px;background:#f8fafc;color:#64748b;border-radius:2px;">Acc 5</span>
+            <span style="font-size:8px;padding:2px 5px;background:#f8fafc;color:#64748b;border-radius:2px;">Acc 6</span>
+            <span style="font-size:8px;padding:2px 5px;background:#f8fafc;color:#64748b;border-radius:2px;">Acc 7</span>
+            <span style="font-size:8px;padding:2px 5px;background:#f8fafc;color:#64748b;border-radius:2px;">Acc 8</span>
+            <span style="font-size:8px;padding:2px 5px;background:#f8fafc;color:#64748b;border-radius:2px;">Acc 9</span>
+            <span style="font-size:8px;padding:2px 5px;background:#f8fafc;color:#64748b;border-radius:2px;">Acc 10</span>
+          </div>
+        </div>
+        <div class="m-card">
+          <div class="m-ct">Pillar filter</div>
+          <div style="display:flex;flex-direction:column;gap:3px;">
+            <span style="font-size:8px;padding:2px 5px;background:#dbeafe;color:#1e40af;border-radius:2px;">Pillar 1 &#10003;</span>
+            <span style="font-size:8px;padding:2px 5px;background:#f8fafc;color:#64748b;border-radius:2px;">Pillar 2</span>
+            <span style="font-size:8px;padding:2px 5px;background:#f8fafc;color:#64748b;border-radius:2px;">Pillar 3</span>
+          </div>
+        </div>
+        <div class="m-card" style="background:#f8fafc;">
+          <div style="font-size:8px;color:#94a3b8;margin-bottom:3px;">Toggle view</div>
+          <div style="display:flex;gap:4px;"><span style="font-size:9px;padding:2px 8px;background:#1e3a5f;color:#fff;border-radius:3px;">FY &#10003;</span><span style="font-size:9px;padding:2px 8px;background:#f1f5f9;color:#475569;border-radius:3px;">Qtr</span></div>
+        </div>
+      </div>
+    </div>
+  </div></div>
+  <p class="db-desc">A multi-year combo chart overlaying revenue ($M) as bars with EBITDA margin % as a line across FY20&ndash;FY24, with account and pillar slicers and an FY/Quarter toggle. Used for strategic planning and historical benchmarking.</p>
+  <div class="db-insight"><strong>Design challenge:</strong> presenting revenue in absolute values alongside EBITDA as a percentage on the same visual &mdash; two metrics with completely different scales &mdash; without one obscuring the other, while keeping the account-level filter meaningful across five fiscal years.</div>
+</div>
+
+<!-- 07 DSO -->
+<div class="db-entry">
+  <div class="db-header">
+    <div class="db-meta"><span class="db-num">07</span><div class="db-title">DSO &amp; Billing Tracker</div></div>
+    <div class="db-pills"><span class="db-pill">Tech Mahindra Limited</span><span class="db-pill">Excel</span></div>
+  </div>
+  <div class="db-mock"><div class="m-wrap">
+    <div class="m-title">DSO &amp; Billing Tracker &mdash; Unbilled Aging &middot; Outstanding AR &middot; Account Filter</div>
+    <div class="m-row">
+      <div class="m-card" style="flex:.6;"><div class="m-ct">Account filter</div>
+        <div style="display:flex;gap:3px;flex-wrap:wrap;">
+          <span style="font-size:9px;padding:2px 7px;background:#dbeafe;color:#1e40af;border-radius:3px;">Acc 2 &#10003;</span>
+          <span style="font-size:9px;padding:2px 7px;background:#f8fafc;color:#64748b;border-radius:3px;">Acc 1</span>
+          <span style="font-size:9px;padding:2px 7px;background:#f8fafc;color:#64748b;border-radius:3px;">Acc 3</span>
+          <span style="font-size:9px;padding:2px 7px;background:#f8fafc;color:#64748b;border-radius:3px;">Acc 5</span>
+        </div>
+      </div>
+      <div class="m-card" style="flex:2;"><div class="m-ct">DSO Summary</div>
+        <table class="m-table" style="font-size:9px;">
+          <thead><tr><th>Quarter</th><th>Quarterly Rev ($M)</th><th>Rev/Day ($M)</th><th>Unbilled ($M)</th><th>Outstanding ($M)</th><th>DSO Days</th></tr></thead>
+          <tbody>
+            <tr><td>Q1</td><td>2.88</td><td>0.03</td><td>0.92</td><td>0.03</td><td style="color:#e11d48;font-weight:500;">30</td></tr>
+            <tr><td>Q2</td><td>3.12</td><td>0.04</td><td>0.78</td><td>0.08</td><td style="color:#d97706;font-weight:500;">28</td></tr>
+            <tr><td>Q3</td><td>3.06</td><td>0.03</td><td>1.01</td><td>0.02</td><td style="color:#15803d;font-weight:500;">24</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="m-row"><div class="m-card" style="flex:1;"><div class="m-ct">Unbilled Aging ($ Mn)</div>
+      <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-top:4px;">
+        <div style="text-align:center;background:#fff1f2;border-radius:4px;padding:6px 2px;"><div style="font-size:7px;color:#94a3b8;margin-bottom:3px;">0&ndash;30</div><div style="font-size:13px;font-weight:500;color:#e11d48;">0.45</div></div>
+        <div style="text-align:center;background:#fff1f2;border-radius:4px;padding:6px 2px;"><div style="font-size:7px;color:#94a3b8;margin-bottom:3px;">31&ndash;60</div><div style="font-size:13px;font-weight:500;color:#e11d48;">0.09</div></div>
+        <div style="text-align:center;background:#f8fafc;border-radius:4px;padding:6px 2px;"><div style="font-size:7px;color:#94a3b8;margin-bottom:3px;">61&ndash;90</div><div style="font-size:13px;font-weight:500;color:#475569;">0.00</div></div>
+        <div style="text-align:center;background:#f8fafc;border-radius:4px;padding:6px 2px;"><div style="font-size:7px;color:#94a3b8;margin-bottom:3px;">91&ndash;120</div><div style="font-size:13px;font-weight:500;color:#475569;">0.00</div></div>
+        <div style="text-align:center;background:#f8fafc;border-radius:4px;padding:6px 2px;"><div style="font-size:7px;color:#94a3b8;margin-bottom:3px;">121&ndash;150</div><div style="font-size:13px;font-weight:500;color:#475569;">0.00</div></div>
+        <div style="text-align:center;background:#fff1f2;border-radius:4px;padding:6px 2px;"><div style="font-size:7px;color:#94a3b8;margin-bottom:3px;">151&ndash;180</div><div style="font-size:13px;font-weight:500;color:#e11d48;">0.28</div></div>
+        <div style="text-align:center;background:#fff1f2;border-radius:4px;padding:6px 2px;"><div style="font-size:7px;color:#94a3b8;margin-bottom:3px;">GT 180</div><div style="font-size:13px;font-weight:500;color:#e11d48;">0.10</div></div>
+      </div>
+      <div style="display:flex;justify-content:flex-end;margin-top:5px;padding-top:4px;border-top:.5px solid #e2e8f0;"><span style="font-size:9px;color:#94a3b8;margin-right:8px;">Total Unbilled</span><span style="font-size:13px;font-weight:500;color:#0f172a;">0.92</span></div>
+    </div></div>
+    <div class="m-row"><div class="m-card" style="flex:1;"><div class="m-ct">Outstanding AR Aging ($ Mn)</div>
+      <table class="m-table" style="font-size:8.5px;">
+        <thead><tr><th>S/Due</th><th>Curr Mo</th><th>0&ndash;30d</th><th>31&ndash;60d</th><th>61&ndash;90d</th><th>91&ndash;120d</th><th>121&ndash;150d</th><th>151&ndash;180d</th><th>181&ndash;365d</th><th>GRT 365</th><th>PDD</th><th>On Acc</th><th style="font-weight:500;color:#0f172a;">Total</th></tr></thead>
+        <tbody><tr><td>0.44</td><td>0.49</td><td style="color:#e11d48;font-weight:500;">0.21</td><td style="color:#e11d48;font-weight:500;">0.23</td><td style="color:#e11d48;font-weight:500;">0.23</td><td>0.01</td><td>0.00</td><td>0.00</td><td>0.01</td><td>0.01</td><td style="color:#e11d48;">-0.01</td><td>0.01</td><td style="font-weight:500;color:#0f172a;">0.03</td></tr></tbody>
+      </table>
+    </div></div>
+  </div></div>
+  <p class="db-desc">A financial health tracker covering Days Sales Outstanding per quarter, unbilled revenue aged across 7 time buckets, and outstanding AR across 13 status and aging categories &mdash; all filterable by account for individual client billing reviews.</p>
+  <div class="db-insight"><strong>Design challenge:</strong> translating complex AR aging data across 13 different time and status categories into a format that finance and account managers could read at a glance &mdash; using colour to immediately flag which buckets needed attention.</div>
+</div>
+
+<div class="note"><span>&#9888;</span><span>All dashboard previews use illustrative or anonymised data. Real client names, individual performance figures, and commercially sensitive information have been removed. Dashboard structures and chart types reflect the original designs.</span></div>
+<div class="page-nav">
+  <a href="https://priyasankar021-hub.github.io/priyanga-s/">&larr; Back to Portfolio</a>
+  <a href="mailto:priyasankar021@gmail.com">Discuss this work &rarr;</a>
+</div>
+</div>
+
+<script>
+const COLORS={tl:'#64748b',h:'#1e3a5f',f:'#d97706'};
+const DATA={
+  2024:{maxV:32,bench:{tl:19,h:8.5,f:3.5},
+    left:[{id:'T4',r:'tl',v:23.6,g:86,ach:true},{id:'T2',r:'tl',v:18.1,g:7,ach:true},{id:'S35',r:'h',v:8.6,g:56,ach:true},{id:'S10',r:'h',v:8.2,g:13000,ach:false},{id:'S18',r:'h',v:7.7,g:480,ach:false},{id:'S14',r:'h',v:7.3,g:119,ach:false},{id:'S34',r:'h',v:5.2,g:-56,ach:false},{id:'S45',r:'f',v:4.9,g:34,ach:false,jn:true},{id:'S24',r:'h',v:3.0,g:717,ach:false},{id:'S16',r:'f',v:2.8,g:22400,ach:false},{id:'S20',r:'h',v:1.6,g:229,ach:false},{id:'S28',r:'h',v:1.2,g:5,ach:false},{id:'S11',r:'h',v:1.1,g:8991,ach:false},{id:'S42',r:'f',v:0.9,g:119,ach:false}],
+    right:[{id:'T8',r:'tl',v:29.5,g:43,ach:true},{id:'T17',r:'tl',v:13.7,g:58,ach:false},{id:'T1',r:'tl',v:11.5,g:75,ach:true},{id:'S1',r:'h',v:10.0,g:25,ach:false},{id:'S14b',r:'f',v:8.7,g:120,ach:false,ex:true},{id:'S2',r:'h',v:7.3,g:-36,ach:false},{id:'S19',r:'h',v:6.1,g:260,ach:false},{id:'S3',r:'h',v:5.1,g:346,ach:false},{id:'S21',r:'h',v:3.4,g:37,ach:false},{id:'S22',r:'f',v:2.2,g:248,ach:false}]},
+  2023:{maxV:24,bench:{tl:16,h:7,f:3},
+    left:[{id:'T4',r:'tl',v:19.0,g:335,ach:true},{id:'T2',r:'tl',v:10.7,g:297,ach:true},{id:'S25',r:'h',v:6.4,g:166,ach:true},{id:'S28',r:'h',v:6.1,g:1400,ach:false},{id:'S14',r:'h',v:5.7,g:90,ach:false},{id:'S18',r:'h',v:5.7,g:1773,ach:false},{id:'S45',r:'f',v:4.1,g:4900,ach:false},{id:'S34',r:'h',v:4.1,g:1100,ach:false},{id:'S20',r:'h',v:2.1,g:5,ach:false},{id:'S36',r:'h',v:1.0,g:445,ach:false},{id:'S24',r:'f',v:0.8,g:1447,ach:false}],
+    right:[{id:'T3',r:'tl',v:21.2,g:54,ach:true},{id:'T1',r:'tl',v:17.9,g:53,ach:true},{id:'T8',r:'tl',v:8.1,g:227,ach:false},{id:'T9',r:'tl',v:8.0,g:157,ach:false},{id:'S21',r:'h',v:7.9,g:167,ach:false},{id:'S2',r:'h',v:5.7,g:186,ach:false},{id:'S13',r:'h',v:5.7,g:367,ach:false},{id:'S1',r:'h',v:5.7,g:92,ach:false},{id:'S22',r:'f',v:4.7,g:-7,ach:false},{id:'S4',r:'h',v:2.5,g:37,ach:false,jn:true}]},
+  2022:{maxV:18,bench:{tl:12,h:5.5,f:2.5},
+    left:[{id:'T4',r:'tl',v:11.6,g:2295,ach:true},{id:'S26',r:'h',v:5.6,g:-180,ach:false},{id:'S20',r:'h',v:5.6,g:-186,ach:false},{id:'T2',r:'tl',v:3.9,g:3290,ach:false},{id:'S28',r:'h',v:3.9,g:100,ach:false},{id:'S18',r:'h',v:3.0,g:475,ach:false},{id:'S48',r:'f',v:2.1,g:980,ach:false},{id:'T7',r:'tl',v:2.0,g:-475,ach:false},{id:'S14',r:'h',v:1.8,g:475,ach:false},{id:'S10',r:'h',v:0.4,g:980,ach:false,jn:true}],
+    right:[{id:'S19',r:'h',v:15.5,g:0,ach:false},{id:'T1',r:'tl',v:7.7,g:-61,ach:false},{id:'S13',r:'h',v:6.4,g:153,ach:false},{id:'S21',r:'h',v:5.8,g:128,ach:false},{id:'S1',r:'h',v:5.4,g:13,ach:false},{id:'T9',r:'tl',v:5.4,g:-30,ach:false,ex:true},{id:'S4',r:'f',v:4.8,g:37,ach:false},{id:'S3',r:'h',v:3.6,g:36,ach:false},{id:'S31',r:'h',v:2.8,g:260,ach:false},{id:'S22',r:'h',v:2.2,g:-86,ach:false}]},
+  2021:{maxV:18,bench:{tl:11,h:5,f:2},
+    left:[{id:'T4',r:'tl',v:10.7,g:0,ach:true},{id:'T2',r:'tl',v:7.6,g:0,ach:false},{id:'S58',r:'h',v:3.8,g:0,ach:false},{id:'S47',r:'f',v:3.2,g:0,ach:false},{id:'S51',r:'h',v:2.3,g:0,ach:false},{id:'S28',r:'h',v:2.1,g:0,ach:false},{id:'S25',r:'h',v:1.9,g:0,ach:false},{id:'S41',r:'f',v:1.5,g:0,ach:false},{id:'S20',r:'h',v:0.8,g:0,ach:false},{id:'S18',r:'h',v:0.6,g:0,ach:false}],
+    right:[{id:'T1',r:'tl',v:14.8,g:0,ach:true},{id:'T9',r:'tl',v:12.5,g:0,ach:true},{id:'S22',r:'h',v:11.2,g:0,ach:false},{id:'S5',r:'h',v:4.6,g:0,ach:false},{id:'S4',r:'f',v:4.4,g:0,ach:false},{id:'S14',r:'h',v:4.2,g:0,ach:false},{id:'S19',r:'h',v:3.8,g:0,ach:false},{id:'T8',r:'tl',v:3.7,g:0,ach:false,jn:true},{id:'S7',r:'h',v:3.4,g:0,ach:false},{id:'S3',r:'h',v:3.2,g:0,ach:false},{id:'S21',r:'h',v:3.1,g:0,ach:false}]}
+};
+
+function fmt(g){if(!g)return'';var a=Math.abs(g);if(a>=1000)return(g>0?'+':'')+Math.round(a/100)/10+'K%';return(g>0?'+':'')+g+'%';}
+
+function draw(canvasId,yd){
+  var canvas=document.getElementById(canvasId);
+  if(!canvas)return;
+  var parent=canvas.parentElement;
+  var W=Math.max(parent.clientWidth-20,400);
+  canvas.width=W;
+  var PAD_TOP=28,BAR_H=88,LABEL_H=44,H=PAD_TOP+BAR_H+LABEL_H;
+  canvas.height=H;
+  var ctx=canvas.getContext('2d');
+  ctx.clearRect(0,0,W,H);
+  var all=[].concat(yd.left,['SEP'],yd.right);
+  var nBars=yd.left.length+yd.right.length;
+  var barW=Math.min(22,Math.floor((W-40)/(nBars+3)));
+  var gap=Math.max(1,Math.floor(barW*0.1));
+  // bench lines
+  ['tl','h','f'].forEach(function(role){
+    var bv=yd.bench[role];
+    var by=PAD_TOP+BAR_H-(bv/yd.maxV)*BAR_H;
+    ctx.save();ctx.strokeStyle=COLORS[role];ctx.lineWidth=1;ctx.setLineDash([4,3]);ctx.globalAlpha=0.5;
+    ctx.beginPath();ctx.moveTo(8,by);ctx.lineTo(W-8,by);ctx.stroke();ctx.restore();
+  });
+  var x=10;
+  all.forEach(function(bar){
+    if(bar==='SEP'){
+      ctx.save();ctx.fillStyle='#94a3b8';ctx.font='8px monospace';ctx.textAlign='center';
+      ctx.fillText('H',x+barW/2,PAD_TOP+BAR_H+12);ctx.restore();
+      x+=barW+gap*2;return;
+    }
+    var bh=Math.max(2,(bar.v/yd.maxV)*BAR_H);
+    var by=PAD_TOP+BAR_H-bh;
+    ctx.fillStyle=COLORS[bar.r];
+    if(ctx.roundRect){ctx.beginPath();ctx.roundRect(x,by,barW,bh,[1,1,0,0]);ctx.fill();}
+    else{ctx.fillRect(x,by,barW,bh);}
+    // value
+    ctx.save();ctx.fillStyle='#0f172a';ctx.font='bold 7px monospace';ctx.textAlign='center';
+    ctx.fillText(bar.v,x+barW/2,by-2);ctx.restore();
+    // achievement dot
+    ctx.beginPath();ctx.arc(x+barW/2,by+6,3.5,0,Math.PI*2);
+    ctx.fillStyle=bar.ach?'#16a34a':'#dc2626';ctx.fill();
+    // entry/exit
+    if(bar.jn){ctx.beginPath();ctx.arc(x+barW/2,by-10,4.5,0,Math.PI*2);ctx.fillStyle='#60a5fa';ctx.fill();ctx.strokeStyle='#2563eb';ctx.lineWidth=1;ctx.stroke();}
+    if(bar.ex){ctx.beginPath();ctx.arc(x+barW/2,by-10,4.5,0,Math.PI*2);ctx.fillStyle='#fbbf24';ctx.fill();ctx.strokeStyle='#d97706';ctx.lineWidth=1;ctx.stroke();}
+    // id label
+    ctx.save();ctx.fillStyle='#64748b';ctx.font='6.5px monospace';ctx.textAlign='center';
+    ctx.fillText(bar.id.replace('b',''),x+barW/2,PAD_TOP+BAR_H+12);ctx.restore();
+    // growth
+    if(bar.g){
+      var gs=fmt(bar.g);
+      ctx.save();ctx.fillStyle=bar.g>0?'#15803d':'#dc2626';ctx.font='6px monospace';ctx.textAlign='center';
+      ctx.fillText(gs,x+barW/2,PAD_TOP+BAR_H+24);ctx.restore();
+    }
+    x+=barW+gap;
+  });
+  // F label
+  ctx.save();ctx.fillStyle='#94a3b8';ctx.font='8px monospace';ctx.textAlign='center';
+  ctx.fillText('F',W-6,PAD_TOP+BAR_H+12);ctx.restore();
+}
+
+function renderAll(){[2024,2023,2022,2021].forEach(function(y){draw('c'+y,DATA[y]);});}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',renderAll);}else{renderAll();}
+window.addEventListener('resize',renderAll);
+</script>
+</body>
+</html>
