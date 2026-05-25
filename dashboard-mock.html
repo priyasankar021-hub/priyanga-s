@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sample Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #eef2f7; font-family: 'DM Sans', sans-serif; padding: 10px; }
+  .db-title { background:#1e3a5f; color:#fff; text-align:center; padding:7px; font-size:12px; font-weight:500; letter-spacing:.08em; border-radius:4px 4px 0 0; margin-bottom:6px; }
+  .row { display:grid; gap:5px; margin-bottom:5px; }
+  .card { background:#fff; border:0.5px solid #c8d6e5; border-radius:4px; padding:7px; }
+  .ct { font-size:8px; color:#64748b; font-weight:500; letter-spacing:.05em; text-transform:uppercase; border-bottom:.5px solid #e8eef4; padding-bottom:3px; margin-bottom:5px; }
+  .bars { display:flex; align-items:flex-end; gap:3px; }
+  .bc { display:flex; flex-direction:column; align-items:center; gap:1px; flex:1; }
+  .b { width:100%; border-radius:2px 2px 0 0; }
+  .bl { font-size:7px; color:#94a3b8; }
+  .hb-row { display:flex; align-items:center; gap:5px; margin-bottom:3px; }
+  .hb-lbl { font-size:7px; color:#475569; width:54px; flex-shrink:0; text-align:right; }
+  .hb-track { flex:1; height:9px; background:#f0f4f8; border-radius:2px; overflow:hidden; }
+  .hb-fill { height:100%; border-radius:2px; }
+  .hb-val { font-size:7px; color:#475569; width:26px; flex-shrink:0; }
+  .dt { width:100%; border-collapse:collapse; }
+  .dt th { font-size:7px; color:#94a3b8; padding:2px 4px; border-bottom:.5px solid #e2e8f0; text-align:left; }
+  .dt td { font-size:7px; color:#475569; padding:2px 4px; border-bottom:.5px solid #f1f5f9; }
+  .dt tr:last-child td { border-bottom:none; }
+  .donut-wrap { display:flex; align-items:center; gap:8px; }
+  .leg { display:flex; flex-direction:column; gap:3px; }
+  .leg-r { display:flex; align-items:center; gap:4px; font-size:7px; color:#475569; }
+  .leg-d { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+  .kpi { background:#f8fafc; border:.5px solid #dde6f0; border-radius:4px; padding:6px 8px; }
+  .kv { font-size:11px; font-weight:500; color:#0f172a; line-height:1; }
+  .kl { font-size:7px; color:#94a3b8; text-transform:uppercase; letter-spacing:.05em; margin-top:2px; }
+  .pm-table { width:100%; border-collapse:collapse; }
+  .pm-table th { font-size:7px; color:#94a3b8; padding:2px 3px; text-align:center; border-bottom:.5px solid #e2e8f0; }
+  .pm-table th:first-child { text-align:left; }
+  .pm-table td { font-size:7px; color:#475569; padding:2px 3px; border-bottom:.5px solid #f1f5f9; text-align:center; }
+  .pm-table td:first-child { text-align:left; color:#0f172a; font-weight:500; }
+  .pm-table tr:last-child td { border-bottom:none; }
+  .bill-bar { display:flex; align-items:flex-end; gap:2px; height:50px; }
+  .bb-col { display:flex; flex-direction:column; align-items:center; gap:1px; flex:1; }
+</style>
+</head>
+<body>
+
+<div class="db-title">Sample Dashboard — Sales & Business Leadership</div>
+
+<div class="row" style="grid-template-columns:1.1fr 2.2fr 1.4fr;">
+  <div class="card">
+    <div class="ct">Pipeline TCV (SM)</div>
+    <div class="bars" style="height:55px;">
+      <div class="bc"><div class="b" style="height:30px;background:#1e3a5f;"></div><div class="bl">Comm</div></div>
+      <div class="bc"><div class="b" style="height:48px;background:#2563eb;"></div><div class="bl">Adj</div></div>
+    </div>
+    <div style="font-size:7px;color:#94a3b8;margin-top:3px;">Current quarter</div>
+  </div>
+  <div class="card">
+    <div class="ct">Monthly pipeline movement</div>
+    <table class="pm-table">
+      <thead><tr><th>Category</th><th>Jan</th><th>Feb</th><th>Mar</th><th>Apr</th><th>May</th><th>Jun</th><th>Jul</th><th>Aug</th><th>Sep</th><th>Oct</th><th>Nov</th><th>Dec</th></tr></thead>
+      <tbody>
+        <tr><td>New Pipeline</td><td>12</td><td>14</td><td>11</td><td>16</td><td>13</td><td>18</td><td>15</td><td>17</td><td>14</td><td>19</td><td>16</td><td>21</td></tr>
+        <tr><td>New Deals</td><td>4</td><td>5</td><td>3</td><td>6</td><td>5</td><td>7</td><td>6</td><td>5</td><td>7</td><td>8</td><td>6</td><td>9</td></tr>
+        <tr><td>Deliverables</td><td>8</td><td>9</td><td>8</td><td>10</td><td>8</td><td>11</td><td>9</td><td>12</td><td>7</td><td>11</td><td>10</td><td>12</td></tr>
+        <tr><td>Renewals/Expansions</td><td>6</td><td>5</td><td>7</td><td>5</td><td>8</td><td>6</td><td>7</td><td>9</td><td>6</td><td>8</td><td>7</td><td>10</td></tr>
+        <tr><td>Assessments</td><td>3</td><td>2</td><td>4</td><td>3</td><td>2</td><td>4</td><td>3</td><td>5</td><td>3</td><td>4</td><td>3</td><td>5</td></tr>
+        <tr><td>Resolutions</td><td>1</td><td>2</td><td>1</td><td>3</td><td>2</td><td>2</td><td>3</td><td>2</td><td>4</td><td>2</td><td>3</td><td>3</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="card">
+    <div class="ct">Sales region owners</div>
+    <table class="dt">
+      <thead><tr><th>Region</th><th>Sales Lead</th></tr></thead>
+      <tbody>
+        <tr><td>N. India</td><td>James R.</td></tr>
+        <tr><td>S. India</td><td>Sarah K.</td></tr>
+        <tr><td>E. India</td><td>Liu W.</td></tr>
+        <tr><td>W. India</td><td>Carlos M.</td></tr>
+        <tr><td>Central</td><td>Anna P.</td></tr>
+        <tr><td>Key Acc.</td><td>David O.</td></tr>
+        <tr><td>Enterprise</td><td>Kenji T.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="row" style="grid-template-columns:1fr 1fr 1.3fr 1.3fr 1.2fr 1.3fr;">
+  <div class="card">
+    <div class="ct">Lead score by type</div>
+    <div class="donut-wrap">
+      <svg width="48" height="48" viewBox="0 0 48 48">
+        <circle cx="24" cy="24" r="18" fill="none" stroke="#e2e8f0" stroke-width="10"/>
+        <circle cx="24" cy="24" r="18" fill="none" stroke="#1e3a5f" stroke-width="10" stroke-dasharray="56 57" stroke-dashoffset="0"/>
+        <circle cx="24" cy="24" r="18" fill="none" stroke="#2563eb" stroke-width="10" stroke-dasharray="28 57" stroke-dashoffset="-56"/>
+        <circle cx="24" cy="24" r="18" fill="none" stroke="#93c5fd" stroke-width="10" stroke-dasharray="14 57" stroke-dashoffset="-84"/>
+      </svg>
+      <div class="leg">
+        <div class="leg-r"><div class="leg-d" style="background:#1e3a5f;"></div>Direct 49%</div>
+        <div class="leg-r"><div class="leg-d" style="background:#2563eb;"></div>Partner 25%</div>
+        <div class="leg-r"><div class="leg-d" style="background:#93c5fd;"></div>Inbound 26%</div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="ct">Lead gen by year</div>
+    <div class="bars" style="height:44px;">
+      <div class="bc"><div class="b" style="height:28px;background:#1e3a5f;"></div><div class="bl">2021</div></div>
+      <div class="bc"><div class="b" style="height:36px;background:#1e3a5f;"></div><div class="bl">2022</div></div>
+      <div class="bc"><div class="b" style="height:44px;background:#2563eb;"></div><div class="bl">2023</div></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="ct">Pipeline aging TCV (SM)</div>
+    <div class="bars" style="height:44px;">
+      <div class="bc"><div class="b" style="height:44px;background:#1e3a5f;"></div><div class="bl">&lt;3mo</div></div>
+      <div class="bc"><div class="b" style="height:32px;background:#2563eb;"></div><div class="bl">3–6mo</div></div>
+      <div class="bc"><div class="b" style="height:20px;background:#60a5fa;"></div><div class="bl">6–9mo</div></div>
+      <div class="bc"><div class="b" style="height:12px;background:#bfdbfe;border:.5px solid #93c5fd;"></div><div class="bl">&gt;9mo</div></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="ct">Revenue SM 2023</div>
+    <div class="bars" style="height:44px;">
+      <div class="bc"><div class="b" style="height:38px;background:#1e3a5f;"></div><div class="bl">Existing</div></div>
+      <div class="bc"><div class="b" style="height:28px;background:#2563eb;"></div><div class="bl">Generic</div></div>
+      <div class="bc"><div class="b" style="height:20px;background:#60a5fa;"></div><div class="bl">New</div></div>
+      <div class="bc"><div class="b" style="height:44px;background:#1e40af;"></div><div class="bl">Total</div></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="ct">Revenue by SAFR</div>
+    <div class="bars" style="height:44px;">
+      <div class="bc"><div class="b" style="height:38px;background:#1e3a5f;"></div><div class="bl">Button</div></div>
+      <div class="bc"><div class="b" style="height:26px;background:#2563eb;"></div><div class="bl">Emulate</div></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="ct">Revenue by billing mode</div>
+    <div style="font-size:7px;color:#94a3b8;margin-bottom:3px;">Year Pass filter</div>
+    <div class="hb-row"><div class="hb-lbl">Fee / Materials</div><div class="hb-track"><div class="hb-fill" style="width:72%;background:#1e3a5f;"></div></div><div class="hb-val">$18.2M</div></div>
+    <div class="hb-row"><div class="hb-lbl">TAIM</div><div class="hb-track"><div class="hb-fill" style="width:48%;background:#2563eb;"></div></div><div class="hb-val">$12.1M</div></div>
+    <div class="hb-row"><div class="hb-lbl">Fixed Price</div><div class="hb-track"><div class="hb-fill" style="width:30%;background:#60a5fa;"></div></div><div class="hb-val">$7.9M</div></div>
+  </div>
+</div>
+
+<div class="row" style="grid-template-columns:1fr 1.3fr 1.3fr 1.4fr;">
+  <div class="card">
+    <div class="ct">TCV (SM) by deal size</div>
+    <div class="hb-row"><div class="hb-lbl">Porter</div><div class="hb-track"><div class="hb-fill" style="width:30%;background:#1e3a5f;"></div></div><div class="hb-val">$8M</div></div>
+    <div class="hb-row"><div class="hb-lbl">Small</div><div class="hb-track"><div class="hb-fill" style="width:45%;background:#1e3a5f;"></div></div><div class="hb-val">$14M</div></div>
+    <div class="hb-row"><div class="hb-lbl">MED</div><div class="hb-track"><div class="hb-fill" style="width:62%;background:#2563eb;"></div></div><div class="hb-val">$22M</div></div>
+    <div class="hb-row"><div class="hb-lbl">LGE</div><div class="hb-track"><div class="hb-fill" style="width:80%;background:#1e40af;"></div></div><div class="hb-val">$34M</div></div>
+    <div class="hb-row"><div class="hb-lbl">NGE</div><div class="hb-track"><div class="hb-fill" style="width:55%;background:#60a5fa;"></div></div><div class="hb-val">$18M</div></div>
+  </div>
+  <div class="card">
+    <div class="ct">Business vertical — TCV (SM)</div>
+    <div class="hb-row"><div class="hb-lbl">Technology</div><div class="hb-track"><div class="hb-fill" style="width:85%;background:#1e3a5f;"></div></div><div class="hb-val">$38M</div></div>
+    <div class="hb-row"><div class="hb-lbl">Manufacturing</div><div class="hb-track"><div class="hb-fill" style="width:68%;background:#1e3a5f;"></div></div><div class="hb-val">$28M</div></div>
+    <div class="hb-row"><div class="hb-lbl">Fin. Services</div><div class="hb-track"><div class="hb-fill" style="width:50%;background:#2563eb;"></div></div><div class="hb-val">$22M</div></div>
+    <div class="hb-row"><div class="hb-lbl">Healthcare</div><div class="hb-track"><div class="hb-fill" style="width:36%;background:#60a5fa;"></div></div><div class="hb-val">$16M</div></div>
+    <div class="hb-row"><div class="hb-lbl">Retail</div><div class="hb-track"><div class="hb-fill" style="width:24%;background:#93c5fd;"></div></div><div class="hb-val">$10M</div></div>
+  </div>
+  <div class="card">
+    <div class="ct">Revenue (SM) vs TCV (SM)</div>
+    <div class="hb-row"><div class="hb-lbl">Technology</div><div class="hb-track"><div class="hb-fill" style="width:78%;background:#1e3a5f;"></div></div><div class="hb-val">$12M</div></div>
+    <div class="hb-row"><div class="hb-lbl">Manufacturing</div><div class="hb-track"><div class="hb-fill" style="width:60%;background:#1e3a5f;"></div></div><div class="hb-val">$9.6M</div></div>
+    <div class="hb-row"><div class="hb-lbl">Fin. Services</div><div class="hb-track"><div class="hb-fill" style="width:44%;background:#2563eb;"></div></div><div class="hb-val">$7.2M</div></div>
+    <div class="hb-row"><div class="hb-lbl">Healthcare</div><div class="hb-track"><div class="hb-fill" style="width:32%;background:#60a5fa;"></div></div><div class="hb-val">$5.1M</div></div>
+    <div class="hb-row"><div class="hb-lbl">Retail</div><div class="hb-track"><div class="hb-fill" style="width:20%;background:#93c5fd;"></div></div><div class="hb-val">$3.4M</div></div>
+  </div>
+  <div class="card">
+    <div class="ct">Business vertical × size matrix</div>
+    <table class="dt">
+      <thead><tr><th>Size</th><th>Reg</th><th>Team</th><th>Mar</th><th>Tue</th><th>Total</th></tr></thead>
+      <tbody>
+        <tr><td>Porter</td><td>12</td><td>8</td><td>6</td><td>4</td><td>30</td></tr>
+        <tr><td>Small</td><td>18</td><td>14</td><td>10</td><td>8</td><td>50</td></tr>
+        <tr><td>MED</td><td>22</td><td>18</td><td>14</td><td>11</td><td>65</td></tr>
+        <tr><td>LGE</td><td>28</td><td>24</td><td>18</td><td>15</td><td>85</td></tr>
+        <tr><td>NGE</td><td>16</td><td>12</td><td>9</td><td>8</td><td>45</td></tr>
+        <tr><td style="font-weight:500;color:#0f172a;">Total</td><td style="font-weight:500;">96</td><td style="font-weight:500;">76</td><td style="font-weight:500;">57</td><td style="font-weight:500;">46</td><td style="font-weight:500;">275</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="row" style="grid-template-columns:1fr 1fr 1fr 1fr;">
+  <div class="card"><div class="ct">TCV (SM) by pursuits — waterfall</div><div id="wf1"></div></div>
+  <div class="card"><div class="ct">TCV (SM) by category — waterfall</div><div id="wf2"></div></div>
+  <div class="card"><div class="ct">Res. acq vs pursuits (A) — waterfall</div><div id="wf3"></div></div>
+  <div class="card"><div class="ct">Res. acq vs pursuits (B) — waterfall</div><div id="wf4"></div></div>
+</div>
+
+<div class="row" style="grid-template-columns:0.7fr 2.5fr 0.9fr;">
+  <div class="card">
+    <div class="ct">Billing KPIs</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;">
+      <div class="kpi"><div class="kl">YTD Billed</div><div class="kv">$38.2M</div></div>
+      <div class="kpi"><div class="kl">MTD Billed</div><div class="kv">$5.8M</div></div>
+      <div class="kpi"><div class="kl">YTD Billed</div><div class="kv">$38.2M</div></div>
+      <div class="kpi"><div class="kl">MTD Billed</div><div class="kv">$5.8M</div></div>
+      <div class="kpi" style="grid-column:span 2;"><div class="kl">YTD Unbilled</div><div class="kv">$6.4M</div></div>
+      <div class="kpi" style="grid-column:span 2;"><div class="kl">MTD Unbilled</div><div class="kv">$1.1M</div></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="ct">Billings (YTD & annual) by month</div>
+    <div class="bill-bar">
+      <div class="bb-col"><div class="b" style="height:18px;background:#1e3a5f;border-radius:2px 2px 0 0;width:100%;"></div><div class="bl">Jan</div></div>
+      <div class="bb-col"><div class="b" style="height:22px;background:#1e3a5f;border-radius:2px 2px 0 0;width:100%;"></div><div class="bl">Feb</div></div>
+      <div class="bb-col"><div class="b" style="height:20px;background:#1e3a5f;border-radius:2px 2px 0 0;width:100%;"></div><div class="bl">Mar</div></div>
+      <div class="bb-col"><div class="b" style="height:28px;background:#1e3a5f;border-radius:2px 2px 0 0;width:100%;"></div><div class="bl">Apr</div></div>
+      <div class="bb-col"><div class="b" style="height:24px;background:#1e3a5f;border-radius:2px 2px 0 0;width:100%;"></div><div class="bl">May</div></div>
+      <div class="bb-col"><div class="b" style="height:32px;background:#2563eb;border-radius:2px 2px 0 0;width:100%;"></div><div class="bl">Jun</div></div>
+      <div class="bb-col"><div class="b" style="height:38px;background:#2563eb;border-radius:2px 2px 0 0;width:100%;"></div><div class="bl">Jul</div></div>
+      <div class="bb-col"><div class="b" style="height:42px;background:#2563eb;border-radius:2px 2px 0 0;width:100%;"></div><div class="bl">Aug</div></div>
+      <div class="bb-col"><div class="b" style="height:36px;background:#2563eb;border-radius:2px 2px 0 0;width:100%;"></div><div class="bl">Sep</div></div>
+      <div class="bb-col"><div class="b" style="height:44px;background:#1e40af;border-radius:2px 2px 0 0;width:100%;"></div><div class="bl">Oct</div></div>
+      <div class="bb-col"><div class="b" style="height:48px;background:#1e40af;border-radius:2px 2px 0 0;width:100%;"></div><div class="bl">Nov</div></div>
+      <div class="bb-col"><div class="b" style="height:50px;background:#1e40af;border-radius:2px 2px 0 0;width:100%;"></div><div class="bl">Dec</div></div>
+    </div>
+    <div class="leg" style="flex-direction:row;gap:12px;margin-top:4px;">
+      <div class="leg-r"><div class="leg-d" style="background:#1e3a5f;border-radius:2px;"></div>H1 Actuals</div>
+      <div class="leg-r"><div class="leg-d" style="background:#2563eb;border-radius:2px;"></div>H2 Actuals</div>
+      <div class="leg-r"><div class="leg-d" style="background:#1e40af;border-radius:2px;"></div>Q4 Target</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="ct">Billed vs. un-billed</div>
+    <div class="donut-wrap" style="flex-direction:column;align-items:center;gap:6px;">
+      <svg width="70" height="70" viewBox="0 0 70 70">
+        <circle cx="35" cy="35" r="26" fill="none" stroke="#e2e8f0" stroke-width="12"/>
+        <circle cx="35" cy="35" r="26" fill="none" stroke="#1e3a5f" stroke-width="12" stroke-dasharray="105 58" stroke-dashoffset="0"/>
+        <circle cx="35" cy="35" r="26" fill="none" stroke="#93c5fd" stroke-width="12" stroke-dasharray="58 105" stroke-dashoffset="-105"/>
+        <text x="35" y="38" text-anchor="middle" font-size="9" fill="#0f172a" font-weight="500">85%</text>
+      </svg>
+      <div class="leg">
+        <div class="leg-r"><div class="leg-d" style="background:#1e3a5f;"></div>Billed — $38.2M</div>
+        <div class="leg-r"><div class="leg-d" style="background:#93c5fd;"></div>Unbilled — $6.4M</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function drawWaterfall(containerId, data) {
+  const container = document.getElementById(containerId);
+  const H = 62;
+  const maxAbs = Math.max(...data.map(d => Math.abs(d.v))) * 1.15;
+  const scale = (H * 0.85) / maxAbs;
+  let running = 0;
+  const cols = data.map((d) => {
+    const isTotal = d.type === 'total';
+    const val = d.v;
+    const barH = Math.max(Math.abs(val) * scale, 3);
+    const fromBottom = isTotal ? (H - barH) : (val >= 0 ? (H - (running + val) * scale) : (H - running * scale));
+    if (!isTotal) running += val;
+    return { d, barH, fromBottom, isTotal };
+  });
+  const n = cols.length;
+  let svg = `<svg width="100%" height="${H+16}" viewBox="0 ${n*22}" preserveAspectRatio="none" style="display:block;">`;
+  cols.forEach((col, i) => {
+    const x = i * 22;
+    const w = 18;
+    const color = col.isTotal ? '#1e40af' : col.d.v >= 0 ? '#1e3a5f' : '#e11d48';
+    svg += `<rect x="${x+2}" y="${col.fromBottom.toFixed(1)}" width="${w}" height="${col.barH.toFixed(1)}" fill="${color}" rx="1"/>`;
+    svg += `<text x="${x+w/2+2}" y="${H+10}" text-anchor="middle" font-size="5.5" fill="#94a3b8">${col.d.l}</text>`;
+    const sign = col.d.v > 0 && !col.isTotal ? '+' : '';
+    const valY = col.fromBottom > 8 ? col.fromBottom - 2 : col.fromBottom + col.barH + 6;
+    svg += `<text x="${x+w/2+2}" y="${valY.toFixed(1)}" text-anchor="middle" font-size="5.5" fill="${col.isTotal?'#1e40af':col.d.v>=0?'#15803d':'#e11d48'}" font-weight="500">${sign}${col.d.v}</text>`;
+    if (i < cols.length - 1 && !col.isTotal) {
+      const lineY = col.d.v >= 0 ? col.fromBottom : col.fromBottom + col.barH;
+      svg += `<line x1="${x+w+2}" y1="${lineY.toFixed(1)}" x2="${x+22}" y2="${lineY.toFixed(1)}" stroke="#cbd5e1" stroke-width="0.5" stroke-dasharray="2,1"/>`;
+    }
+  });
+  svg += `</svg>`;
+  container.innerHTML = svg;
+}
+drawWaterfall('wf1',[{l:'Start',v:20,type:'pos'},{l:'Q1+',v:8,type:'pos'},{l:'Q2-',v:-3,type:'neg'},{l:'Q3+',v:12,type:'pos'},{l:'Q4-',v:-4,type:'neg'},{l:'End',v:33,type:'total'}]);
+drawWaterfall('wf2',[{l:'Base',v:18,type:'pos'},{l:'CatA+',v:10,type:'pos'},{l:'CatB-',v:-5,type:'neg'},{l:'CatC+',v:8,type:'pos'},{l:'CatD-',v:-2,type:'neg'},{l:'Total',v:29,type:'total'}]);
+drawWaterfall('wf3',[{l:'Open',v:22,type:'pos'},{l:'Acq+',v:14,type:'pos'},{l:'Lost-',v:-6,type:'neg'},{l:'New+',v:9,type:'pos'},{l:'Cls-',v:-4,type:'neg'},{l:'Net',v:35,type:'total'}]);
+drawWaterfall('wf4',[{l:'Open',v:16,type:'pos'},{l:'Win+',v:11,type:'pos'},{l:'Drp-',v:-4,type:'neg'},{l:'Exp+',v:7,type:'pos'},{l:'Cls-',v:-3,type:'neg'},{l:'Net',v:27,type:'total'}]);
+</script>
+</body>
+</html>
