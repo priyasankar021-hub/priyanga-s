@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sales Performance Analysis — Priyanga Sivasankaran</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;1,9..144,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{--bg:#f7f8fc;--surface:#fff;--surface2:#f0f4f8;--border:#e2e8f0;--border2:#cbd5e1;--text:#0f172a;--text2:#475569;--text3:#94a3b8;--teal:#0d9488;--teal-l:#f0fdfa;--teal-m:#ccfbf1;--teal-d:#0f766e;--navy:#1e3a5f;--amber:#d97706;--red:#dc2626;--green:#15803d;--mono:'DM Mono',monospace;--serif:'Fraunces',serif;--sans:'DM Sans',sans-serif;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:15px;line-height:1.7;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 3rem;height:56px;background:rgba(247,248,252,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
+.nav-back{font-family:var(--mono);font-size:12px;color:var(--text2);text-decoration:none;letter-spacing:.06em;transition:color .2s;}
+.nav-back:hover{color:var(--teal);}
+.nav-lbl{font-family:var(--mono);font-size:11px;color:var(--text3);}
+.page{max-width:920px;margin:0 auto;padding:7rem 3rem 5rem;}
+.case-tag{font-family:var(--mono);font-size:10px;color:var(--teal);letter-spacing:.14em;text-transform:uppercase;margin-bottom:1rem;display:flex;align-items:center;gap:.75rem;}
+.case-tag::before{content:'';display:inline-block;width:20px;height:1px;background:var(--teal);}
+h1{font-family:var(--serif);font-size:clamp(1.8rem,4vw,2.8rem);font-weight:300;line-height:1.15;color:var(--text);letter-spacing:-.02em;margin-bottom:.75rem;}
+h1 em{font-style:italic;color:var(--teal);}
+.case-summary{font-size:15px;color:var(--text2);line-height:1.8;max-width:680px;margin-bottom:1.25rem;border-left:3px solid var(--teal);padding-left:1rem;}
+.skills-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:2rem;padding-bottom:2rem;border-bottom:1px solid var(--border);}
+.skill-chip{font-family:var(--mono);font-size:10px;padding:3px 10px;border-radius:4px;background:var(--surface);color:var(--text2);border:1px solid var(--border2);}
+.case-meta{display:flex;flex-wrap:wrap;gap:.6rem;margin-bottom:2.5rem;}
+.meta-pill{font-family:var(--mono);font-size:10px;padding:3px 10px;border-radius:4px;background:var(--surface);border:1px solid var(--border);color:var(--text3);}
+.impact-banner{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:3rem;}
+.impact-cell{background:var(--surface);padding:1.1rem;display:flex;flex-direction:column;gap:3px;}
+.impact-sub{font-family:var(--mono);font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;}
+.impact-val{font-family:var(--mono);font-size:1.4rem;font-weight:500;color:var(--text);line-height:1;}
+.impact-val span{color:var(--teal);}
+.impact-val.neg span{color:var(--red);}
+.impact-label{font-size:11px;color:var(--text2);}
+.section{margin-bottom:3rem;}
+h2{font-family:var(--serif);font-size:1.4rem;font-weight:300;color:var(--text);margin-bottom:.75rem;display:flex;align-items:center;gap:.75rem;}
+h2 .sec-num{font-family:var(--mono);font-size:10px;color:var(--teal);letter-spacing:.1em;}
+p.body{color:var(--text2);margin-bottom:1rem;line-height:1.85;font-size:14px;}
+
+/* ONE SLIDE VIEW */
+.one-slide{background:#fff;border:1px solid var(--border);border-radius:10px;padding:14px;margin-top:1rem;}
+.os-grid{display:grid;grid-template-columns:1.1fr 1.3fr 0.9fr;gap:10px;}
+.os-card{background:#fafbfd;border:1px solid #e8edf3;border-radius:6px;padding:9px;font-family:var(--mono);}
+.os-title{font-size:9px;font-weight:500;color:#0f172a;text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px;border-bottom:1px solid #e8edf3;padding-bottom:4px;}
+.os-note{font-size:8px;color:#64748b;line-height:1.5;margin-top:5px;background:#f1f5f9;border-radius:3px;padding:5px 6px;}
+.os-highlight-title{font-size:11px;font-weight:600;color:#0f172a;margin-bottom:6px;}
+
+.analysis-block{margin-bottom:2.25rem;}
+.ab-title{font-size:14px;font-weight:500;color:var(--text);margin-bottom:.6rem;}
+.ab-mock{background:#eef2f7;border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:.85rem;}
+.ab-insight{background:#f8fafc;border:1px solid var(--border);border-left:3px solid var(--text3);border-radius:0 8px 8px 0;padding:.75rem 1rem;font-size:12.5px;color:var(--text2);line-height:1.7;font-style:italic;}
+.ab-insight strong{color:var(--text);font-weight:500;font-style:normal;}
+.legend-row{display:flex;flex-wrap:wrap;gap:14px;margin-top:8px;}
+.leg-item{display:flex;align-items:center;gap:5px;font-size:10px;color:#475569;font-family:var(--mono);}
+.leg-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+.leg-sq{width:9px;height:9px;border-radius:2px;flex-shrink:0;}
+.highlight{background:var(--teal-l);border:1px solid var(--teal-m);border-left:3px solid var(--teal);border-radius:0 8px 8px 0;padding:1rem 1.25rem;margin:1rem 0;font-size:14px;color:var(--text2);line-height:1.75;}
+.highlight strong{color:var(--teal-d);font-weight:500;}
+.takeaway-list{background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-top:1rem;}
+.tk-row{display:flex;align-items:flex-start;gap:1rem;padding:10px 16px;border-bottom:1px solid var(--border);}
+.tk-row:last-child{border-bottom:none;}
+.tk-dot{width:6px;height:6px;border-radius:50%;background:var(--teal);flex-shrink:0;margin-top:8px;}
+.tk-text{font-size:13px;color:var(--text2);line-height:1.6;}
+.note{background:#fffbeb;border:1px solid #fde68a;border-radius:6px;padding:.85rem 1.1rem;font-size:12px;color:#92400e;margin-top:1.5rem;display:flex;gap:.6rem;}
+.page-nav{display:flex;justify-content:space-between;padding-top:2.5rem;border-top:1px solid var(--border);margin-top:3rem;flex-wrap:wrap;gap:1rem;}
+.page-nav a{font-family:var(--mono);font-size:11px;color:var(--text2);text-decoration:none;padding:.55rem 1.1rem;border:1px solid var(--border);border-radius:5px;background:var(--surface);transition:all .2s;}
+.page-nav a:hover{border-color:var(--teal);color:var(--teal);}
+@media(max-width:640px){nav{padding:0 1.25rem;}.nav-lbl{display:none;}.page{padding:5.5rem 1.25rem 4rem;}.impact-banner{grid-template-columns:1fr 1fr;}.os-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-back" href="https://priyasankar021-hub.github.io/priyanga-s/">&larr; Back to Portfolio</a>
+  <span class="nav-lbl">case study &middot; sales performance analysis</span>
+</nav>
+
+<div class="page">
+
+  <div class="case-tag">Case Study &middot; Strategic Analysis &amp; Leadership Reporting</div>
+  <h1>Turning sales data into a <em>strategic narrative</em><br/>for leadership decisions</h1>
+
+  <p class="case-summary">
+    A multi-year strategic analysis of sales team performance &mdash; headcount trends, productivity, performance distribution, and revenue growth quality &mdash; built to surface the questions leadership needed to ask, not just the numbers they needed to see.
+  </p>
+
+  <div class="skills-row">
+    <span class="skill-chip">Excel</span>
+    <span class="skill-chip">PowerPoint</span>
+    <span class="skill-chip">Trend Analysis</span>
+    <span class="skill-chip">CAGR Calculation</span>
+    <span class="skill-chip">Performance Distribution</span>
+    <span class="skill-chip">Cohort Analysis</span>
+    <span class="skill-chip">Strategic Insight Writing</span>
+    <span class="skill-chip">Executive Storytelling</span>
+    <span class="skill-chip">Sales Operations</span>
+  </div>
+
+  <div class="case-meta">
+    <span class="meta-pill">Bosch Global Software Technologies</span>
+    <span class="meta-pill">Excel &rarr; PowerPoint</span>
+  </div>
+
+  <div class="impact-banner">
+    <div class="impact-cell">
+      <div class="impact-sub">Revenue CAGR</div>
+      <div class="impact-val">8.7<span>%</span></div>
+      <div class="impact-label">across analysis window</div>
+    </div>
+    <div class="impact-cell">
+      <div class="impact-sub">Team growth</div>
+      <div class="impact-val">+29<span>%</span></div>
+      <div class="impact-label">headcount scaled up</div>
+    </div>
+    <div class="impact-cell">
+      <div class="impact-sub">Avg revenue / HC</div>
+      <div class="impact-val neg"><span>-8%</span></div>
+      <div class="impact-label">productivity flat to declining</div>
+    </div>
+    <div class="impact-cell">
+      <div class="impact-sub">Top performers drive</div>
+      <div class="impact-val">~78<span>%</span></div>
+      <div class="impact-label">of total revenue</div>
+    </div>
+  </div>
+
+  <!-- 01 BRIEF -->
+  <div class="section">
+    <h2><span class="sec-num">01</span> The Brief</h2>
+    <p class="body">Leadership needed more than a quarterly performance update &mdash; they needed to understand <strong style="color:var(--text);font-weight:500;">why</strong> the numbers looked the way they did. The team had grown, revenue had grown, but something underneath those headline numbers needed explaining: was growth genuinely healthy, or was it masking structural risk?</p>
+    <p class="body">This analysis pulled together four years of headcount, revenue, and individual sales manager performance data to answer that question directly &mdash; and to flag the risks leadership couldn't see from the topline numbers alone. It was originally delivered as a single executive summary slide, then unpacked into deeper supporting analysis for follow-up discussion.</p>
+  </div>
+
+  <!-- 02 ONE SLIDE VIEW -->
+  <div class="section">
+    <h2><span class="sec-num">02</span> The One-Slide View</h2>
+    <p class="body">This is how the analysis was first presented to leadership &mdash; everything on a single slide, dense by design, so the full picture was visible in one glance before any one thread needed unpacking.</p>
+
+    <div class="one-slide">
+      <div class="os-grid">
+
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div class="os-card">
+            <div class="os-title">HC Trend</div>
+            <svg width="100%" height="80" viewBox="0 0 200 80">
+              <rect x="10" y="30" width="30" height="40" fill="#1e3a5f" rx="1"/>
+              <rect x="60" y="42" width="30" height="28" fill="#1e3a5f" rx="1"/>
+              <rect x="110" y="18" width="30" height="52" fill="#1e3a5f" rx="1"/>
+              <rect x="160" y="12" width="30" height="58" fill="#1e3a5f" rx="1"/>
+              <text x="25" y="26" font-size="9" fill="#0f172a" text-anchor="middle" font-weight="500">35</text>
+              <text x="75" y="38" font-size="9" fill="#0f172a" text-anchor="middle" font-weight="500">31</text>
+              <text x="125" y="14" font-size="9" fill="#0f172a" text-anchor="middle" font-weight="500">40</text>
+              <text x="175" y="8" font-size="9" fill="#0f172a" text-anchor="middle" font-weight="500">43</text>
+              <text x="25" y="78" font-size="7" fill="#94a3b8" text-anchor="middle">'21</text>
+              <text x="75" y="78" font-size="7" fill="#94a3b8" text-anchor="middle">'22</text>
+              <text x="125" y="78" font-size="7" fill="#94a3b8" text-anchor="middle">'23</text>
+              <text x="175" y="78" font-size="7" fill="#94a3b8" text-anchor="middle">'24</text>
+            </svg>
+            <div class="os-note">Inflow running ahead of attrition &mdash; continuity risk worth a closer look.</div>
+          </div>
+
+          <div class="os-card">
+            <div class="os-title">Hunter vs Farmer Rev</div>
+            <svg width="100%" height="70" viewBox="0 0 200 70">
+              <polyline points="15,28 75,40 135,10 185,16" fill="none" stroke="#ea580c" stroke-width="2"/>
+              <polyline points="15,55 75,48 135,32 185,14" fill="none" stroke="#1e3a5f" stroke-width="2"/>
+              <text x="15" y="22" font-size="8" fill="#ea580c">70</text><text x="185" y="10" font-size="8" fill="#ea580c">84</text>
+              <text x="15" y="64" font-size="8" fill="#1e3a5f">32</text><text x="185" y="10" font-size="8" fill="#1e3a5f" dx="14">82</text>
+            </svg>
+            <div class="os-note">Hunter revenue overtaking Farmer &mdash; a mix shift worth planning around.</div>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div class="os-card">
+            <div class="os-title">TCV &amp; REV &mdash; SMs Above/Below Avg</div>
+            <div style="display:flex;flex-direction:column;gap:3px;">
+              <div style="display:flex;align-items:center;gap:5px;"><span style="width:24px;font-size:7px;color:#475569;">'24</span><div style="display:flex;flex:1;height:13px;border-radius:2px;overflow:hidden;"><div style="width:35%;background:#2563eb;"></div><div style="width:65%;background:#1e3a5f;"></div></div></div>
+              <div style="display:flex;align-items:center;gap:5px;"><span style="width:24px;font-size:7px;color:#475569;">'23</span><div style="display:flex;flex:1;height:13px;border-radius:2px;overflow:hidden;"><div style="width:50%;background:#2563eb;"></div><div style="width:50%;background:#1e3a5f;"></div></div></div>
+              <div style="display:flex;align-items:center;gap:5px;"><span style="width:24px;font-size:7px;color:#475569;">'22</span><div style="display:flex;flex:1;height:13px;border-radius:2px;overflow:hidden;"><div style="width:55%;background:#2563eb;"></div><div style="width:45%;background:#1e3a5f;"></div></div></div>
+              <div style="display:flex;align-items:center;gap:5px;"><span style="width:24px;font-size:7px;color:#475569;">'21</span><div style="display:flex;flex:1;height:13px;border-radius:2px;overflow:hidden;"><div style="width:46%;background:#2563eb;"></div><div style="width:54%;background:#1e3a5f;"></div></div></div>
+            </div>
+            <div class="os-note">Only ~35% above average in 2024, down from earlier years.</div>
+          </div>
+
+          <div class="os-card">
+            <div class="os-title">TCV &amp; REV &mdash; Avg per HC</div>
+            <svg width="100%" height="70" viewBox="0 0 200 70">
+              <rect x="10" y="20" width="16" height="40" fill="#2563eb" rx="1"/><rect x="28" y="30" width="16" height="30" fill="#1e3a5f" rx="1"/>
+              <rect x="60" y="12" width="16" height="48" fill="#2563eb" rx="1"/><rect x="78" y="22" width="16" height="38" fill="#1e3a5f" rx="1"/>
+              <rect x="110" y="16" width="16" height="44" fill="#2563eb" rx="1"/><rect x="128" y="24" width="16" height="36" fill="#1e3a5f" rx="1"/>
+              <rect x="160" y="2" width="16" height="58" fill="#2563eb" rx="1"/><rect x="178" y="14" width="16" height="46" fill="#1e3a5f" rx="1"/>
+              <polyline points="18,16 68,8 118,12 168,0" fill="none" stroke="#3b82f6" stroke-width="1.3"/>
+              <polyline points="36,26 86,18 136,20 186,10" fill="none" stroke="#1e3a5f" stroke-width="1.3"/>
+            </svg>
+            <div class="os-note">Per-head TCV &amp; REV averages flat across four years despite team growth.</div>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div class="os-card">
+            <div class="os-title">2024 Highlights</div>
+            <div class="os-highlight-title">43 SMs &mdash; EAV1 2024</div>
+            <svg width="100%" height="70" viewBox="0 0 160 70">
+              <circle cx="58" cy="35" r="32" fill="#94a3b8" opacity="0.5"/>
+              <circle cx="102" cy="35" r="32" fill="#93c5fd" opacity="0.55"/>
+              <text x="40" y="34" font-size="9" fill="#fff" text-anchor="middle" font-weight="500">6</text>
+              <text x="40" y="46" font-size="6.5" fill="#fff" text-anchor="middle">TCV only</text>
+              <text x="80" y="30" font-size="9" fill="#0f172a" text-anchor="middle" font-weight="500">7</text>
+              <text x="80" y="42" font-size="6" fill="#0f172a" text-anchor="middle">Both</text>
+              <text x="120" y="34" font-size="9" fill="#0f172a" text-anchor="middle" font-weight="500">6</text>
+              <text x="120" y="46" font-size="6.5" fill="#0f172a" text-anchor="middle">Rev only</text>
+            </svg>
+            <div class="os-note">24 not achieved (56%). Top performers (~35% of team) drive ~78% of revenue.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- 03 DEEPER ANALYSIS -->
+  <div class="section">
+    <h2><span class="sec-num">03</span> Going Deeper</h2>
+    <p class="body">Each tile on the one-slide view represents a question, not a final answer. Below is the supporting analysis behind each one &mdash; the detail leadership asked for once the summary slide raised the right questions.</p>
+
+    <div class="analysis-block">
+      <div class="ab-title">Headcount Trend &amp; Movement</div>
+      <div class="ab-mock">
+        <svg width="100%" height="180" viewBox="0 0 480 180" style="font-family:'DM Mono',monospace;">
+          <rect x="30" y="64" width="70" height="96" fill="#1e3a5f" rx="2"/>
+          <rect x="150" y="88" width="70" height="72" fill="#1e3a5f" rx="2"/>
+          <rect x="270" y="40" width="70" height="120" fill="#1e3a5f" rx="2"/>
+          <rect x="390" y="30" width="70" height="130" fill="#1e3a5f" rx="2"/>
+          <text x="65" y="58" font-size="13" fill="#0f172a" text-anchor="middle" font-weight="500">35</text>
+          <text x="185" y="82" font-size="13" fill="#0f172a" text-anchor="middle" font-weight="500">31</text>
+          <text x="305" y="34" font-size="13" fill="#0f172a" text-anchor="middle" font-weight="500">40</text>
+          <text x="425" y="24" font-size="13" fill="#0f172a" text-anchor="middle" font-weight="500">43</text>
+          <polyline points="65,130 185,140 305,120 425,128" fill="none" stroke="#84cc16" stroke-width="2"/>
+          <polyline points="65,140 185,134 305,138 425,142" fill="none" stroke="#64748b" stroke-width="2"/>
+          <text x="65" y="125" font-size="10" fill="#3f6212">9</text><text x="185" y="135" font-size="10" fill="#3f6212">6</text><text x="305" y="115" font-size="10" fill="#3f6212">13</text><text x="425" y="123" font-size="10" fill="#3f6212">9</text>
+          <text x="65" y="153" font-size="10" fill="#475569">6</text><text x="185" y="147" font-size="10" fill="#475569">8</text><text x="305" y="151" font-size="10" fill="#475569">8</text><text x="425" y="155" font-size="10" fill="#475569">6</text>
+          <text x="65" y="172" font-size="11" fill="#94a3b8" text-anchor="middle">2021</text>
+          <text x="185" y="172" font-size="11" fill="#94a3b8" text-anchor="middle">2022</text>
+          <text x="305" y="172" font-size="11" fill="#94a3b8" text-anchor="middle">2023</text>
+          <text x="425" y="172" font-size="11" fill="#94a3b8" text-anchor="middle">2024</text>
+        </svg>
+        <div class="legend-row">
+          <div class="leg-item"><div class="leg-sq" style="background:#1e3a5f;"></div>Total HC</div>
+          <div class="leg-item"><div style="width:14px;height:2px;background:#84cc16;"></div>Moved In</div>
+          <div class="leg-item"><div style="width:14px;height:2px;background:#64748b;"></div>Moved Out</div>
+        </div>
+      </div>
+      <div class="ab-insight">While attrition remains within industry average (~20%), inflow average (~28%) seems high. <strong>Does it impact long-term customer relationships, risk in continuity, sales cycle continuity?</strong></div>
+    </div>
+
+    <div class="analysis-block">
+      <div class="ab-title">Performance Distribution &mdash; Sales Managers Above &amp; Below Average</div>
+      <div class="ab-mock">
+        <div style="font-size:11px;font-weight:500;color:#0f172a;margin-bottom:8px;font-family:'DM Mono',monospace;">TCV &mdash; No. of SMs above &amp; below avg</div>
+        <div style="display:flex;flex-direction:column;gap:5px;margin-bottom:14px;">
+          <div style="display:flex;align-items:center;gap:8px;"><div style="width:34px;font-size:10px;color:#475569;font-family:monospace;">2024</div><div style="display:flex;flex:1;height:20px;border-radius:3px;overflow:hidden;"><div style="width:35%;background:#2563eb;display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;">15</div><div style="width:65%;background:#1e3a5f;display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;">28</div></div></div>
+          <div style="display:flex;align-items:center;gap:8px;"><div style="width:34px;font-size:10px;color:#475569;font-family:monospace;">2023</div><div style="display:flex;flex:1;height:20px;border-radius:3px;overflow:hidden;"><div style="width:50%;background:#2563eb;display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;">20</div><div style="width:50%;background:#1e3a5f;display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;">20</div></div></div>
+          <div style="display:flex;align-items:center;gap:8px;"><div style="width:34px;font-size:10px;color:#475569;font-family:monospace;">2022</div><div style="display:flex;flex:1;height:20px;border-radius:3px;overflow:hidden;"><div style="width:55%;background:#2563eb;display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;">17</div><div style="width:45%;background:#1e3a5f;display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;">14</div></div></div>
+          <div style="display:flex;align-items:center;gap:8px;"><div style="width:34px;font-size:10px;color:#475569;font-family:monospace;">2021</div><div style="display:flex;flex:1;height:20px;border-radius:3px;overflow:hidden;"><div style="width:46%;background:#2563eb;display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;">16</div><div style="width:54%;background:#1e3a5f;display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;">19</div></div></div>
+        </div>
+        <div style="font-size:11px;font-weight:500;color:#0f172a;margin-bottom:8px;font-family:'DM Mono',monospace;">REV &mdash; No. of SMs above &amp; below avg</div>
+        <div style="display:flex;flex-direction:column;gap:5px;">
+          <div style="display:flex;align-items:center;gap:8px;"><div style="width:34px;font-size:10px;color:#475569;font-family:monospace;">2024</div><div style="display:flex;flex:1;height:20px;border-radius:3px;overflow:hidden;"><div style="width:35%;background:#2563eb;display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;">15</div><div style="width:65%;background:#1e3a5f;display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;">28</div></div></div>
+          <div style="display:flex;align-items:center;gap:8px;"><div style="width:34px;font-size:10px;color:#475569;font-family:monospace;">2023</div><div style="display:flex;flex:1;height:20px;border-radius:3px;overflow:hidden;"><div style="width:48%;background:#2563eb;display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;">19</div><div style="width:52%;background:#1e3a5f;display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;">21</div></div></div>
+          <div style="display:flex;align-items:center;gap:8px;"><div style="width:34px;font-size:10px;color:#475569;font-family:monospace;">2022</div><div style="display:flex;flex:1;height:20px;border-radius:3px;overflow:hidden;"><div style="width:58%;background:#2563eb;display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;">18</div><div style="width:42%;background:#1e3a5f;display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;">13</div></div></div>
+          <div style="display:flex;align-items:center;gap:8px;"><div style="width:34px;font-size:10px;color:#475569;font-family:monospace;">2021</div><div style="display:flex;flex:1;height:20px;border-radius:3px;overflow:hidden;"><div style="width:37%;background:#2563eb;display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;">13</div><div style="width:63%;background:#1e3a5f;display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;">22</div></div></div>
+        </div>
+        <div class="legend-row"><div class="leg-item"><div class="leg-sq" style="background:#2563eb;"></div>Above avg line</div><div class="leg-item"><div class="leg-sq" style="background:#1e3a5f;"></div>Below avg line</div></div>
+      </div>
+      <div class="ab-insight">Only about a third of the team performed above average in <strong>both</strong> TCV and REV &mdash; a sharp drop from earlier years. <strong>The trend calls for deeper enablement of the middle tier, review of target setting, and potential refinement of coaching or support strategies.</strong></div>
+    </div>
+
+    <div class="analysis-block">
+      <div class="ab-title">TCV &amp; Revenue &mdash; Average per Headcount</div>
+      <div class="ab-mock">
+        <svg width="100%" height="180" viewBox="0 0 480 180" style="font-family:'DM Mono',monospace;">
+          <rect x="30" y="88" width="32" height="72" fill="#2563eb" rx="1"/><rect x="64" y="104" width="32" height="56" fill="#1e3a5f" rx="1"/>
+          <rect x="150" y="70" width="32" height="90" fill="#2563eb" rx="1"/><rect x="184" y="88" width="32" height="72" fill="#1e3a5f" rx="1"/>
+          <rect x="270" y="76" width="32" height="84" fill="#2563eb" rx="1"/><rect x="304" y="84" width="32" height="76" fill="#1e3a5f" rx="1"/>
+          <rect x="390" y="42" width="32" height="118" fill="#2563eb" rx="1"/><rect x="424" y="68" width="32" height="92" fill="#1e3a5f" rx="1"/>
+          <text x="46" y="82" font-size="10" fill="#0f172a" text-anchor="middle" font-weight="500">118.6</text>
+          <text x="80" y="98" font-size="10" fill="#0f172a" text-anchor="middle" font-weight="500">98.5</text>
+          <text x="166" y="64" font-size="10" fill="#0f172a" text-anchor="middle" font-weight="500">132.7</text>
+          <text x="200" y="82" font-size="10" fill="#0f172a" text-anchor="middle" font-weight="500">107.2</text>
+          <text x="286" y="70" font-size="10" fill="#0f172a" text-anchor="middle" font-weight="500">128.9</text>
+          <text x="320" y="78" font-size="10" fill="#0f172a" text-anchor="middle" font-weight="500">113.4</text>
+          <text x="406" y="36" font-size="10" fill="#0f172a" text-anchor="middle" font-weight="500">165.8</text>
+          <text x="440" y="62" font-size="10" fill="#0f172a" text-anchor="middle" font-weight="500">126.6</text>
+          <polyline points="46,30 166,22 286,40 406,30" fill="none" stroke="#3b82f6" stroke-width="2"/>
+          <polyline points="80,42 200,36 320,46 440,40" fill="none" stroke="#1e3a5f" stroke-width="2"/>
+          <text x="46" y="24" font-size="10" fill="#1d4ed8">3.4</text><text x="166" y="16" font-size="10" fill="#1d4ed8">3.9</text><text x="286" y="34" font-size="10" fill="#1d4ed8">3.0</text><text x="406" y="24" font-size="10" fill="#1d4ed8">3.6</text>
+          <text x="80" y="38" font-size="10" fill="#1e3a5f">2.8</text><text x="200" y="32" font-size="10" fill="#1e3a5f">3.1</text><text x="320" y="42" font-size="10" fill="#1e3a5f">2.6</text><text x="440" y="36" font-size="10" fill="#1e3a5f">2.8</text>
+          <text x="63" y="172" font-size="11" fill="#94a3b8" text-anchor="middle">2021</text>
+          <text x="183" y="172" font-size="11" fill="#94a3b8" text-anchor="middle">2022</text>
+          <text x="303" y="172" font-size="11" fill="#94a3b8" text-anchor="middle">2023</text>
+          <text x="423" y="172" font-size="11" fill="#94a3b8" text-anchor="middle">2024</text>
+        </svg>
+        <div class="legend-row">
+          <div class="leg-item"><div class="leg-sq" style="background:#2563eb;"></div>TCV</div>
+          <div class="leg-item"><div class="leg-sq" style="background:#1e3a5f;"></div>REV</div>
+          <div class="leg-item"><div style="width:14px;height:2px;background:#3b82f6;"></div>Avg TCV per HC</div>
+          <div class="leg-item"><div style="width:14px;height:2px;background:#1e3a5f;"></div>Avg REV per HC</div>
+        </div>
+      </div>
+      <div class="ab-insight">While the team size has grown and TCV &amp; Revenue have grown, <strong>individual productivity has remained the same</strong> &mdash; the per-head averages are essentially flat across four years despite scaling the team.</div>
+    </div>
+
+    <div class="analysis-block">
+      <div class="ab-title">Hunter vs Farmer Trend</div>
+      <div class="ab-mock">
+        <svg width="100%" height="170" viewBox="0 0 480 170" style="font-family:'DM Mono',monospace;">
+          <polyline points="40,42 180,66 320,16 440,26" fill="none" stroke="#ea580c" stroke-width="2"/>
+          <circle cx="40" cy="42" r="3" fill="#ea580c"/><circle cx="180" cy="66" r="3" fill="#ea580c"/><circle cx="320" cy="16" r="3" fill="#ea580c"/><circle cx="440" cy="26" r="3" fill="#ea580c"/>
+          <text x="40" y="34" font-size="11" fill="#ea580c" text-anchor="middle" font-weight="500">70</text><text x="180" y="60" font-size="11" fill="#ea580c" text-anchor="middle" font-weight="500">61</text><text x="320" y="8" font-size="11" fill="#ea580c" text-anchor="middle" font-weight="500">90</text><text x="440" y="20" font-size="11" fill="#ea580c" text-anchor="middle" font-weight="500">84</text>
+          <polyline points="40,122 180,104 320,76 440,32" fill="none" stroke="#1e3a5f" stroke-width="2"/>
+          <circle cx="40" cy="122" r="3" fill="#1e3a5f"/><circle cx="180" cy="104" r="3" fill="#1e3a5f"/><circle cx="320" cy="76" r="3" fill="#1e3a5f"/><circle cx="440" cy="32" r="3" fill="#1e3a5f"/>
+          <text x="40" y="116" font-size="11" fill="#1e3a5f" text-anchor="middle" font-weight="500">32</text><text x="180" y="98" font-size="11" fill="#1e3a5f" text-anchor="middle" font-weight="500">38</text><text x="320" y="70" font-size="11" fill="#1e3a5f" text-anchor="middle" font-weight="500">58</text><text x="440" y="48" font-size="11" fill="#1e3a5f" text-anchor="middle" font-weight="500">82</text>
+          <polyline points="40,132 180,136 320,140 440,144" fill="none" stroke="#ea580c" stroke-width="1.5" stroke-dasharray="3,2"/>
+          <polyline points="40,134 180,138 320,142 440,146" fill="none" stroke="#1e3a5f" stroke-width="1.5" stroke-dasharray="3,2"/>
+          <text x="40" y="160" font-size="11" fill="#94a3b8" text-anchor="middle">2021</text>
+          <text x="180" y="160" font-size="11" fill="#94a3b8" text-anchor="middle">2022</text>
+          <text x="320" y="160" font-size="11" fill="#94a3b8" text-anchor="middle">2023</text>
+          <text x="440" y="160" font-size="11" fill="#94a3b8" text-anchor="middle">2024</text>
+        </svg>
+        <div class="legend-row">
+          <div class="leg-item"><div style="width:14px;height:2px;background:#ea580c;border-top:2px dotted #ea580c;"></div>Farmer (count)</div>
+          <div class="leg-item"><div style="width:14px;height:2px;background:#1e3a5f;border-top:2px dotted #1e3a5f;"></div>Hunter (count)</div>
+          <div class="leg-item"><div style="width:14px;height:2px;background:#ea580c;"></div>F Rev</div>
+          <div class="leg-item"><div style="width:14px;height:2px;background:#1e3a5f;"></div>H Rev</div>
+        </div>
+      </div>
+      <div class="ab-insight">Hunter revenue grew sharply (32 &rarr; 82) while Farmer revenue plateaued (90 &rarr; 84) in 2024 &mdash; <strong>a structural shift in where growth is coming from</strong>, worth understanding before planning next year's role mix.</div>
+    </div>
+
+    <div class="analysis-block">
+      <div class="ab-title">2024 Highlights &mdash; Target Achievement &amp; Performer Concentration</div>
+      <div class="ab-mock">
+        <div style="display:flex;gap:20px;flex-wrap:wrap;align-items:center;">
+          <div style="flex:1;min-width:220px;">
+            <div style="font-size:12px;font-weight:500;color:#0f172a;margin-bottom:10px;font-family:'DM Mono',monospace;">43 SMs &mdash; EAV1 Achievement in 2024</div>
+            <svg width="220" height="120" viewBox="0 0 220 120">
+              <circle cx="80" cy="60" r="48" fill="#94a3b8" opacity="0.55"/>
+              <circle cx="140" cy="60" r="48" fill="#93c5fd" opacity="0.55"/>
+              <text x="55" y="58" font-size="13" fill="#fff" text-anchor="middle" font-weight="500">6</text>
+              <text x="55" y="74" font-size="9" fill="#fff" text-anchor="middle">TCV only</text>
+              <text x="55" y="86" font-size="9" fill="#fff" text-anchor="middle">14%</text>
+              <text x="110" y="50" font-size="13" fill="#0f172a" text-anchor="middle" font-weight="500">7</text>
+              <text x="110" y="64" font-size="8" fill="#0f172a" text-anchor="middle">Achieved</text>
+              <text x="110" y="74" font-size="8" fill="#0f172a" text-anchor="middle">both</text>
+              <text x="110" y="84" font-size="8" fill="#0f172a" text-anchor="middle">16%</text>
+              <text x="165" y="58" font-size="13" fill="#0f172a" text-anchor="middle" font-weight="500">6</text>
+              <text x="165" y="74" font-size="9" fill="#0f172a" text-anchor="middle">Rev only</text>
+              <text x="165" y="86" font-size="9" fill="#0f172a" text-anchor="middle">14%</text>
+            </svg>
+            <div style="font-size:11px;color:#475569;margin-top:6px;font-family:'DM Mono',monospace;">24 &mdash; Not Achieved &mdash; 56%</div>
+          </div>
+          <div style="flex:1;min-width:220px;">
+            <div style="font-size:12px;font-weight:500;color:#0f172a;margin-bottom:10px;font-family:'DM Mono',monospace;">Revenue Concentration</div>
+            <div style="display:flex;align-items:center;gap:14px;">
+              <svg width="100" height="100" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="38" fill="none" stroke="#bfdbfe" stroke-width="16"/>
+                <circle cx="50" cy="50" r="38" fill="none" stroke="#1e3a5f" stroke-width="16" stroke-dasharray="186 53" stroke-dashoffset="0"/>
+                <text x="50" y="46" font-size="13" fill="#0f172a" text-anchor="middle" font-weight="500">Top 35%</text>
+                <text x="50" y="60" font-size="11" fill="#0f172a" text-anchor="middle" font-weight="500">78%</text>
+              </svg>
+              <div style="font-size:10px;color:#475569;line-height:1.7;font-family:'DM Mono',monospace;">
+                <div><strong style="color:#0f172a;">Top 35% Performers</strong> contribute 78%</div>
+                <div>Remaining team (65%) &rarr; 22%</div>
+                <div style="margin-top:4px;">~36% of TCV came from 13 SMs (30%) &mdash; IC only</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="ab-insight">Either the targets are overly ambitious or there are challenges preventing effective execution. <strong>Understanding whether this gap stems from capability, structure, market dynamics, or goal-setting misalignment will be critical to improving balanced performance.</strong> This also highlights a growing dependency on top performers &mdash; posing risks to sustainability and scalability if not addressed.</div>
+    </div>
+
+    <div class="analysis-block">
+      <div class="ab-title">Revenue vs Average Revenue per Head &mdash; Growth Quality Check</div>
+      <div class="ab-mock">
+        <div style="display:flex;gap:18px;flex-wrap:wrap;">
+          <div style="flex:1;min-width:200px;display:flex;flex-direction:column;gap:10px;">
+            <div><span style="font-size:20px;font-weight:500;color:#65a30d;">8.7%</span><div style="font-size:10px;color:#475569;">Revenue CAGR (2021&ndash;2024) &mdash; steady, sustainable topline growth</div></div>
+            <div><span style="font-size:20px;font-weight:500;color:#65a30d;">29%</span><div style="font-size:10px;color:#475569;">Total Revenue Growth &mdash; $98.5M &rarr; $126.6M</div></div>
+            <div><span style="font-size:20px;font-weight:500;color:#dc2626;">-8%</span><div style="font-size:10px;color:#475569;">Avg Revenue per HC &mdash; $3.5M (2022) &rarr; $3.2M (2024)</div></div>
+            <div><span style="font-size:20px;font-weight:500;color:#475569;">+29%</span><div style="font-size:10px;color:#475569;">Team Size Growth &mdash; headcount 31 &rarr; 40</div></div>
+          </div>
+          <div style="flex:1.4;min-width:260px;">
+            <svg width="100%" height="160" viewBox="0 0 320 160" style="font-family:'DM Mono',monospace;">
+              <rect x="20" y="76" width="50" height="64" fill="#1e3a5f" rx="2"/>
+              <rect x="100" y="50" width="50" height="90" fill="#1e3a5f" rx="2"/>
+              <rect x="180" y="44" width="50" height="96" fill="#1e3a5f" rx="2"/>
+              <rect x="260" y="16" width="50" height="124" fill="#1e3a5f" rx="2"/>
+              <text x="45" y="70" font-size="11" fill="#fff" text-anchor="middle" font-weight="500">98.5</text>
+              <text x="125" y="44" font-size="11" fill="#fff" text-anchor="middle" font-weight="500">107.2</text>
+              <text x="205" y="38" font-size="11" fill="#fff" text-anchor="middle" font-weight="500">113.4</text>
+              <text x="285" y="10" font-size="11" fill="#fff" text-anchor="middle" font-weight="500">126.6</text>
+              <polyline points="45,96 125,86 205,104 285,96" fill="none" stroke="#3b82f6" stroke-width="2"/>
+              <circle cx="45" cy="96" r="3" fill="#fff" stroke="#3b82f6" stroke-width="2"/><circle cx="125" cy="86" r="3" fill="#fff" stroke="#3b82f6" stroke-width="2"/><circle cx="205" cy="104" r="3" fill="#fff" stroke="#3b82f6" stroke-width="2"/><circle cx="285" cy="96" r="3" fill="#fff" stroke="#3b82f6" stroke-width="2"/>
+              <text x="45" y="114" font-size="9" fill="#1d4ed8">2.8</text><text x="125" y="80" font-size="9" fill="#1d4ed8">3.5</text><text x="205" y="120" font-size="9" fill="#1d4ed8">3.0</text><text x="285" y="90" font-size="9" fill="#1d4ed8">3.2</text>
+              <text x="125" y="34" font-size="9" fill="#65a30d">8%</text><text x="205" y="26" font-size="9" fill="#65a30d">6%</text><text x="285" y="2" font-size="9" fill="#65a30d">12%</text>
+              <text x="45" y="154" font-size="10" fill="#94a3b8" text-anchor="middle">2021</text>
+              <text x="125" y="154" font-size="10" fill="#94a3b8" text-anchor="middle">2022</text>
+              <text x="205" y="154" font-size="10" fill="#94a3b8" text-anchor="middle">2023</text>
+              <text x="285" y="154" font-size="10" fill="#94a3b8" text-anchor="middle">2024</text>
+            </svg>
+            <div class="legend-row"><div class="leg-item"><div class="leg-sq" style="background:#1e3a5f;"></div>REV ($M)</div><div class="leg-item"><div style="width:14px;height:2px;background:#3b82f6;"></div>Avg REV per HC ($M)</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="ab-insight">Revenue grew at a steady 8.7% CAGR, driven by a 29% increase in team size. However, average revenue per head declined &mdash; indicating that <strong>growth came from scale, not improved productivity</strong>. This highlights a need to improve ramp-up, pipeline quality, and conversion effectiveness.</div>
+    </div>
+
+  </div>
+
+  <!-- 04 STRATEGIC TAKEAWAYS -->
+  <div class="section">
+    <h2><span class="sec-num">04</span> Strategic Takeaways</h2>
+    <p class="body">Pulling the individual analyses together, three structural questions emerged for leadership &mdash; each one a question the topline revenue and headcount numbers alone would never have surfaced.</p>
+
+    <div class="highlight"><strong>1. Growth is real, but it's growth by addition, not by improvement.</strong> Revenue grew nearly 30% over four years, but that came largely from a similarly sized increase in the team &mdash; not from each person selling more. Without addressing ramp-up speed, pipeline quality, and conversion, the next year of growth will require the next round of hiring.</div>
+
+    <div class="highlight"><strong>2. Performance is increasingly concentrated, which is a risk, not just a fact.</strong> A little over a third of the team drives close to 80% of revenue. That's not unusual in sales &mdash; but it is a sustainability and succession risk if those specific people leave, plateau, or are over-relied upon for stretch targets.</div>
+
+    <div class="highlight"><strong>3. Target-setting itself may be part of the problem.</strong> With over half the team missing their EAV1 target in 2024, the question isn't just "who underperformed" &mdash; it's whether targets, enablement, or market conditions are misaligned for the middle tier of the team.</div>
+
+    <div class="takeaway-list">
+      <div class="tk-row"><div class="tk-dot"></div><div class="tk-text">Identified that revenue growth is driven by headcount scale rather than individual productivity gains</div></div>
+      <div class="tk-row"><div class="tk-dot"></div><div class="tk-text">Surfaced a structural shift in the Hunter vs Farmer revenue mix worth addressing in role planning</div></div>
+      <div class="tk-row"><div class="tk-dot"></div><div class="tk-text">Flagged revenue concentration risk in the top performer segment of the team</div></div>
+      <div class="tk-row"><div class="tk-dot"></div><div class="tk-text">Quantified the target achievement gap as a leadership conversation starter, not a verdict</div></div>
+      <div class="tk-row"><div class="tk-dot"></div><div class="tk-text">Connected attrition and inflow rates to potential customer continuity and sales cycle risk</div></div>
+    </div>
+  </div>
+
+  <div class="note"><span>&#9888;</span><span>All figures shown are entirely illustrative and do not reflect actual company data. Real headcount, revenue figures, and individual performance data have been replaced with reconstructed values in line with confidentiality obligations &mdash; only the analytical structure and shape of the findings are preserved.</span></div>
+
+  <div class="page-nav">
+    <a href="https://priyasankar021-hub.github.io/priyanga-s/">&larr; Back to Portfolio</a>
+    <a href="mailto:priyasankar021@gmail.com">Discuss this work &rarr;</a>
+  </div>
+
+</div>
+</body>
+</html>
